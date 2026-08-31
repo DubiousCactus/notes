@@ -1,0 +1,125 @@
+---
+# Chirpy entry point, customized for the Typomagical + Ficus Ruby look.
+---
+
+@use 'abstracts/variables' with (
+  $theme: '{{ site.theme_mode }}',
+  $font-family-base: ('Spectral', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif),
+  $font-family-heading: ('Spectral', 'Source Sans Pro', sans-serif)
+);
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+@use 'user/typomagical-fonts';
+
+/* ------------------------------------------------------------------
+ * Typomagical (publish) + Ficus Ruby color scheme
+ * Source: ~/Learning to Learn/publish.css
+ * ------------------------------------------------------------------ */
+
+/* ---- Ficus Ruby — light ---- */
+:root,
+[data-bs-theme='light'] {
+  --main-bg: #f5f5f5;
+  --text-color: #333834;
+  --text-muted-color: #525e5b;
+  --heading-color: #417262;
+  --link-color: #800000;
+  --blockquote-border-color: #333834;
+  --blockquote-text-color: inherit;
+  --sidebar-bg: #b0c6c2;
+  --sidebar-active-color: #1e3735;
+  --site-title-color: #2b4744;
+  --topbar-bg: rgb(245 245 245 / 70%);
+  --card-bg: #ececec;
+}
+
+[data-bs-theme='light'] .content a:hover {
+  color: #c94458;
+}
+
+/* ---- Ficus Ruby — dark ---- */
+[data-bs-theme='dark'] {
+  --main-bg: #305654;
+  --text-color: #f9ead9;
+  --text-muted-color: #d5c4a1;
+  --heading-color: #dadc8f;
+  --link-color: #fa858f;
+  --blockquote-border-color: #b57614;
+  --blockquote-text-color: inherit;
+  --sidebar-bg: #1e3735;
+  --site-title-color: #f9ead9;
+  --topbar-bg: rgb(48 86 84 / 70%);
+  --card-bg: #1e3735;
+  --img-bg: #1e3735;
+}
+
+[data-bs-theme='dark'] .content a:hover {
+  color: #f4465d;
+}
+
+/* ---- Typomagical headings ---- */
+/* h1 (post titles): Amiri, weight 700 */
+h1,
+h1.dynamic-title,
+#post-title {
+  font-family: 'Amiri', serif;
+  font-weight: 700;
+}
+
+/* h2-h6: body font (Spectral), weight 600, tight letter-spacing */
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+/* Typomagical heading color scale (Ficus Ruby light) */
+[data-bs-theme='light'] {
+  h1 { color: hsl(159 17% 41%); }
+  h2 { color: #417262; }
+  h3 { color: #e3764f; }
+  h4 { color: #e66d9b; }
+  h5 { color: #9359db; }
+  h6 { color: #4065dc; }
+}
+
+/* Typomagical heading color scale (Ficus Ruby dark) */
+[data-bs-theme='dark'] {
+  h1 { color: #7fb89f; }
+  h2 { color: #dadc8f; }
+  h3 { color: #a5e6f9; }
+  h4 { color: #d1abff; }
+  h5 { color: #ffa3c6; }
+  h6 { color: #e8bb89; }
+}
+
+/* ---- Typomagical links: Alegreya SC ---- */
+.content a {
+  font-family: 'Alegreya SC', 'Spectral', serif;
+  font-variant-ligatures: none;
+}
+
+/* ---- Blockquotes: transparent bg, strong left border ---- */
+blockquote {
+  border-left: 3px solid var(--blockquote-border-color);
+  color: var(--blockquote-text-color);
+}
+
+/* ---- Ficus Ruby highlight (==marks==) ---- */
+mark {
+  background: rgb(201 68 88 / 30%);
+  color: inherit;
+}
+
+[data-bs-theme='dark'] mark {
+  background: rgb(181 118 20 / 50%);
+}
