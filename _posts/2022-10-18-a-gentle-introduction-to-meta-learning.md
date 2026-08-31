@@ -1,12 +1,13 @@
 ---
-title: "Meta-Learning"
-description: "Notes on meta-learning"
+title: "A Gentle Introduction to Meta-Learning"
+description: "A Gentle Introduction to Meta-Learning — notes by Théo Morales"
 date: 2022-10-18 12:00:00
 categories: [meta-learning]
 math: true
 pin: false
 ---
 
+{% raw %}
 > *Check out [my PyTorch implementation of MAML](https://github.com/DubiousCactus/TrulyMAML)!*
  
 Deep Neural Networks are used to address complex recognition or classification problems, but they need enormous datasets to train the considerable number of trainable parameters within the network. As a result, the training process is prolonged. However, reducing the training dataset size is not an option, as a large network may recognise only items in the training set and not the underlying class of items. This problem is called overfitting, and while there are some techniques to address this, they result in even slower training and need to be tuned manually.
@@ -50,6 +51,8 @@ The overall goal of the algorithm is to find model (optimizee) parameters that a
 ![maml_algo](/assets/img/blog/maml-algo.png)
 As seen on Algorithm 1, the step size $$\alpha$$ may be fixed or meta-learned. The meta-objective is as follows:
 
+
+
 $$
 \min_{\theta}
 \sum_{\mathcal{T_i \sim p(\mathcal{T})}}
@@ -58,6 +61,8 @@ $$
 p(\mathcal{T})}\mathcal{L}_\mathcal{T_i}(f_{\theta - \alpha \nabla_\theta
 \mathcal{L}_\mathcal{T_i}(f_\theta)})
 $$
+
+
 
 **The meta-gradient is computed here, as being the gradient of the gradient of each task.**
 
@@ -74,22 +79,4 @@ Unlike previous work (such as Andrychowics et al., 2016), the algorithm does not
 **That is mainly why MAML was a breakthrough in meta-learning!**
 
 Experimental results show that MAML is better at  multi-task learning for classification, regression and even reinforcement learning problems. The main advantage of MAML over  Transfer Learning is that it is much more efficient on task adaptation, the training efficiency for a given unseen task, with respect to training iterations and data regime (the amount of training data available). MAML is model agnostic, meaning that it is a generic method for training a wide range of different types of Deep Neural Networks. In fact, it can bring significant value in contexts where gathering training data is costly and where the problem to solve changes often. For instance, a security system could be pre-trained with meta-learning so that it would be able to classify new persons or pets as “non intruders”, given only a few shots. Nevertheless, meta-training remains time-consuming and demanding, although MAML is able to flexibly compromise accuracy for training speed on novel tasks. Recent work has shown promising results in this direction, and meta-learning methods are beginning to reach accuracy levels close to traditional single task training methods.
-
-## Overfitting and memorisation in meta-learning
-
-## Task overfitting and the memorisation problem
-
-For meta-learning to work, the sampled tasks must be mutually exclusive such that no single model can solve all tasks. In some cases where the task is identifiable (*i.e.* the classification labels are not shuffled), the meta-learning algorithm may simply discard the context set and memorise the predictions to minimise the error. In other cases, such as predicting the pose of an object from an image, if the task can be solved from the target inputs alone then the algorithm may minimise the loss while discarding the context set by memorising a function that solves all of the tasks. This results in a zero-shot model that makes average decisions for all tasks without adaptation, and thus poor performance on novel tasks.
-
-![Complete memorisation of the tasks](/assets/img/blog/memorisation.png)
-
-### Information theory to the rescue
-
-The idea proposed by et al is to reduce the information flow between x* and y*, such that the algorithm is forced to use the information in D.
-
-![regularisation](/assets/img/blog/regularisation.png)
-
-
-#### Widening the task distribution
-
-![overfitting_forms](/assets/img/blog/overfitting-forms.png)
+{% endraw %}
