@@ -180,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const currentWidth = container.clientWidth || width;
         const currentHeight = container.clientHeight || height;
 
-        // CRITICAL FIX: Sync SVG viewBox with container dimensions so coordinate systems match 1:1!
         svg.attr('viewBox', [0, 0, currentWidth, currentHeight]);
 
         const xs = nodes.map((n) => n.x);
@@ -192,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const bw = maxX - minX || 1;
         const bh = maxY - minY || 1;
-        const padding = 60;
+        const padding = 50;
 
         const scale = Math.min(
           (currentWidth - padding * 2) / bw,
@@ -258,6 +257,9 @@ document.addEventListener('DOMContentLoaded', function () {
       node
         .on('mouseenter', (event, d) => {
           highlightNode(d);
+          // Highlight post card in list below if matching
+          const card = document.querySelector(`#post-list .card-wrapper[data-url="${d.url}"]`);
+          if (card) card.classList.add('is-graph-hovered');
         })
         .on('mousemove', (event) => {
           const rect = wrap.getBoundingClientRect();
@@ -267,6 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .on('mouseleave', () => {
           unhighlightNode();
+          document.querySelectorAll('#post-list .card-wrapper').forEach((c) => c.classList.remove('is-graph-hovered'));
         })
         .on('click', (event, d) => {
           window.location.href = baseurl + d.url;
@@ -287,6 +290,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
       svg.on('dblclick', () => {
         fit(true);
+      });
+
+      // --- Bi-directional Post Card Hover Sync ---
+      const postCards = document.querySelectorAll('#post-list .card-wrapper');
+      postCards.forEach((card) => {
+        const cardUrl = card.dataset.url;
+        if (!cardUrl) return;
+
+        card.addEventListener('mouseenter', () => {
+          const matchedNode = nodes.find(
+            (n) => n.url === cardUrl || n.id === cardUrl
+          );
+          if (matchedNode) {
+            highlightNode(matchedNode);
+          }
+        });
+
+        card.addEventListener('mouseleave', () => {
+          unhighlightNode();
+        });
       });
 
       // --- Node Dragging ---
@@ -314,6 +337,71 @@ document.addEventListener('DOMContentLoaded', function () {
       simulation.on('tick', () => {
         updatePositions();
       });
+
+      // --- Category Filter Pills ---
+      const filterContainer = document.getElementById('post-graph-filter');
+      if (filterContainer) {
+        const categories = Array.from(
+          new Set(data.nodes.map((n) => n.cat).filter(Boolean))
+        );
+
+        filterContainer.innerHTML = `
+          <button class="filter-pill active" data-cat="all">All Notes</button>
+          ${categories
+            .map((c) => {
+              const color = CAT_COLORS[c] || '#8a8a8a';
+              const name = c.replace(/-/g, ' ');
+              return `<button class="filter-pill" data-cat="${c}">
+                <span class="pill-dot" style="background:${color}"></span>${name}
+              </button>`;
+            })
+            .join('')}
+        `;
+
+        filterContainer.querySelectorAll('.filter-pill').forEach((btn) => {
+          btn.onclick = () => {
+            filterContainer
+              .querySelectorAll('.filter-pill')
+              .forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const selectedCat = btn.dataset.cat;
+            filterGraphAndCards(selectedCat);
+          };
+        });
+      }
+
+      function filterGraphAndCards(category) {
+        postCards.forEach((card) => {
+          const cardCat = card.dataset.cat;
+          if (category === 'all' || cardCat === category) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (category === 'all') {
+          unhighlightNode();
+        } else {
+          const matchingNodes = nodes.filter((n) => n.cat === category);
+          const matchingIds = new Set(matchingNodes.map((n) => n.id));
+
+          node.classed('is-highlighted', (n) => matchingIds.has(n.id));
+          node.classed('is-dimmed', (n) => !matchingIds.has(n.id));
+
+          link.classed('is-highlighted', (l) => {
+            const sId = l.source.id || l.source;
+            const tId = l.target.id || l.target;
+            return matchingIds.has(sId) || matchingIds.has(tId);
+          });
+          link.classed('is-dimmed', (l) => {
+            const sId = l.source.id || l.source;
+            const tId = l.target.id || l.target;
+            return !matchingIds.has(sId) && !matchingIds.has(tId);
+          });
+        }
+      }
 
       // --- Controls Toolbar ---
       let controls = wrap.querySelector('.graph-controls');
@@ -370,6 +458,25 @@ document.addEventListener('DOMContentLoaded', function () {
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && wrap.classList.contains('is-fullscreen')) {
           toggleFullscreen();
+        }
+      });
+
+      // --- Sticky Graph on Scroll ---
+      let isSticky = false;
+      const initialWrapTop = wrap.getBoundingClientRect().top + window.scrollY;
+
+      window.addEventListener('scroll', () => {
+        if (wrap.classList.contains('is-fullscreen')) return;
+
+        const scrollY = window.scrollY;
+        const shouldBeSticky = scrollY > initialWrapTop + 140;
+
+        if (shouldBeSticky !== isSticky) {
+          isSticky = shouldBeSticky;
+          wrap.classList.toggle('is-sticky', isSticky);
+          requestAnimationFrame(() => {
+            fit(false);
+          });
         }
       });
 
