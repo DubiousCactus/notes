@@ -7,6 +7,7 @@ tags: [mathematical-foundations, linear-algebra]
 math: true
 media_subpath: /assets/img/blog
 pin: false
+published: false
 ---
 
 {% raw %}

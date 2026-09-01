@@ -7,6 +7,7 @@ tags: [deep-learning, automatic-differentiation]
 math: true
 media_subpath: /assets/img/blog
 pin: false
+published: false
 ---
 
 {% raw %}

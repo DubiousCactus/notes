@@ -7,6 +7,7 @@ tags: [hand-object-interaction]
 math: true
 media_subpath: /assets/img/blog
 pin: false
+published: false
 ---
 
 {% raw %}
