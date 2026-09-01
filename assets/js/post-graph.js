@@ -40,46 +40,46 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    const localLinks = data.links.filter((l) => {
-      const s = l.source.id || l.source;
-      const t = l.target.id || l.target;
-      return s === targetNode.id || t === targetNode.id;
-    });
+    // Deep copy links with clean string IDs to prevent mutated object reference issues in D3
+    const localLinks = data.links
+      .filter((l) => {
+        const sId = typeof l.source === 'object' ? l.source.id : l.source;
+        const tId = typeof l.target === 'object' ? l.target.id : l.target;
+        return sId === targetNode.id || tId === targetNode.id;
+      })
+      .map((l) => ({
+        source: typeof l.source === 'object' ? l.source.id : l.source,
+        target: typeof l.target === 'object' ? l.target.id : l.target,
+        kind: l.kind
+      }));
 
     const connectedIds = new Set([targetNode.id]);
     localLinks.forEach((l) => {
-      connectedIds.add(l.source.id || l.source);
-      connectedIds.add(l.target.id || l.target);
+      connectedIds.add(l.source);
+      connectedIds.add(l.target);
     });
 
     const localNodes = data.nodes
       .filter((n) => connectedIds.has(n.id))
       .map((n) => {
         const isCurrent = n.id === targetNode.id;
-        const r = isCurrent ? 16 : n.type === 'category' ? 12 : 7;
+        const r = isCurrent ? 16 : n.type === 'category' ? 12 : 8;
         return { ...n, r, isCurrent };
       });
 
     // Backlinks list cards
-    const incomingBacklinks = localLinks.filter((l) => {
-      const t = l.target.id || l.target;
-      return t === targetNode.id && l.kind === 'ref';
-    });
-
-    const outgoingLinks = localLinks.filter((l) => {
-      const s = l.source.id || l.source;
-      return s === targetNode.id && l.kind === 'ref';
-    });
+    const incomingBacklinks = localLinks.filter((l) => l.target === targetNode.id && l.kind === 'ref');
+    const outgoingLinks = localLinks.filter((l) => l.source === targetNode.id && l.kind === 'ref');
 
     if (backlinksList) {
       backlinksList.innerHTML = '';
 
       const referencingNodes = incomingBacklinks
-        .map((l) => data.nodes.find((n) => n.id === (l.source.id || l.source)))
+        .map((l) => data.nodes.find((n) => n.id === l.source))
         .filter(Boolean);
 
       const referencedNodes = outgoingLinks
-        .map((l) => data.nodes.find((n) => n.id === (l.target.id || l.target)))
+        .map((l) => data.nodes.find((n) => n.id === l.target))
         .filter(Boolean);
 
       if (!referencingNodes.length && !referencedNodes.length) {
@@ -158,21 +158,23 @@ document.addEventListener('DOMContentLoaded', function () {
         d3
           .forceLink(localLinks)
           .id((d) => d.id)
-          .distance(55)
+          .distance(70)
       )
-      .force('charge', d3.forceManyBody().strength(-100))
+      .force('charge', d3.forceManyBody().strength(-140))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collide', d3.forceCollide().radius((d) => d.r + 8))
+      .force('collide', d3.forceCollide().radius((d) => d.r + 10))
       .stop();
 
-    simulation.tick(200);
+    simulation.tick(250);
 
     const link = g
       .append('g')
       .selectAll('line')
       .data(localLinks)
       .join('line')
-      .attr('class', 'graph-edge');
+      .attr('class', (d) =>
+        d.kind === 'cat' ? 'graph-edge graph-edge-cat' : 'graph-edge'
+      );
 
     const node = g
       .append('g')
@@ -214,6 +216,32 @@ document.addEventListener('DOMContentLoaded', function () {
     const zoom = d3.zoom().on('zoom', (e) => g.attr('transform', e.transform));
     svg.call(zoom);
 
+    // Drag support
+    node.call(
+      d3
+        .drag()
+        .on('start', (event, d) => {
+          if (!event.active) simulation.alphaTarget(0.2).restart();
+          d.fx = d.x;
+          d.fy = d.y;
+        })
+        .on('drag', (event, d) => {
+          const transform = d3.zoomTransform(svg.node());
+          d.fx = transform.invertX(event.x);
+          d.fy = transform.invertY(event.y);
+          updatePositions();
+        })
+        .on('end', (event, d) => {
+          if (!event.active) simulation.alphaTarget(0);
+          d.fx = null;
+          d.fy = null;
+        })
+    );
+
+    simulation.on('tick', () => {
+      updatePositions();
+    });
+
     const xs = localNodes.map((n) => n.x);
     const ys = localNodes.map((n) => n.y);
     const minX = Math.min(...xs);
@@ -222,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const maxY = Math.max(...ys);
     const bw = maxX - minX || 1;
     const bh = maxY - minY || 1;
-    const scale = Math.min((width - 40) / bw, (height - 40) / bh, 1.2);
+    const scale = Math.min((width - 60) / bw, (height - 60) / bh, 1.2);
     const tx = width / 2 - scale * (minX + bw / 2);
     const ty = height / 2 - scale * (minY + bh / 2);
 
