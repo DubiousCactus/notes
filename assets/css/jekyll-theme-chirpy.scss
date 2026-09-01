@@ -578,6 +578,13 @@ main article header h1 {
       fill: #f9ead9;
       stroke: #172624;
       stroke-width: 3.5px;
+      paint-order: stroke;
+
+      &.is-current-label {
+        fill: #fa858f;
+        font-weight: 700;
+        stroke-width: 4px;
+      }
     }
   }
 
@@ -658,8 +665,15 @@ main article header h1 {
 
     .graph-label {
       fill: #333834;
-      stroke: #fcfcfc;
+      stroke: #ffffff;
       stroke-width: 3.5px;
+      paint-order: stroke;
+
+      &.is-current-label {
+        fill: #800000;
+        font-weight: 700;
+        stroke-width: 4px;
+      }
     }
   }
 }

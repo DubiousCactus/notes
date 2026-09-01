@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Deep copy links with clean string IDs to prevent mutated object reference issues in D3
+    // Deep copy links with clean string IDs
     const localLinks = data.links
       .filter((l) => {
         const sId = typeof l.source === 'object' ? l.source.id : l.source;
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .filter((n) => connectedIds.has(n.id))
       .map((n) => {
         const isCurrent = n.id === targetNode.id;
-        const r = isCurrent ? 16 : n.type === 'category' ? 12 : 8;
+        const r = isCurrent ? 15 : n.type === 'category' ? 12 : 7;
         return { ...n, r, isCurrent };
       });
 
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Mini D3 Ego Graph
     const width = container.clientWidth || 600;
-    const height = 240;
+    const height = 280;
 
     container.innerHTML = '';
     const svg = d3
@@ -158,14 +158,14 @@ document.addEventListener('DOMContentLoaded', function () {
         d3
           .forceLink(localLinks)
           .id((d) => d.id)
-          .distance(70)
+          .distance(90)
       )
-      .force('charge', d3.forceManyBody().strength(-140))
+      .force('charge', d3.forceManyBody().strength(-180))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collide', d3.forceCollide().radius((d) => d.r + 10))
+      .force('collide', d3.forceCollide().radius((d) => d.r + 20))
       .stop();
 
-    simulation.tick(250);
+    simulation.tick(280);
 
     const link = g
       .append('g')
@@ -194,13 +194,20 @@ document.addEventListener('DOMContentLoaded', function () {
       .attr('stroke', (d) => (d.isCurrent ? '#fff' : 'none'))
       .attr('stroke-width', (d) => (d.isCurrent ? 3 : 0));
 
+    // Display clean, truncated labels with native hover tooltip
     node
       .append('text')
-      .text((d) => d.title)
-      .attr('class', 'graph-label')
+      .text((d) => (d.title.length > 22 ? d.title.slice(0, 20) + '…' : d.title))
+      .attr('class', (d) =>
+        d.isCurrent
+          ? 'graph-label mini-graph-label is-current-label'
+          : 'graph-label mini-graph-label'
+      )
       .attr('x', 0)
-      .attr('y', (d) => d.r + 11)
+      .attr('y', (d) => d.r + 13)
       .attr('text-anchor', 'middle');
+
+    node.append('title').text((d) => d.title);
 
     function updatePositions() {
       link
@@ -250,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const maxY = Math.max(...ys);
     const bw = maxX - minX || 1;
     const bh = maxY - minY || 1;
-    const scale = Math.min((width - 60) / bw, (height - 60) / bh, 1.2);
+    const scale = Math.min((width - 80) / bw, (height - 80) / bh, 1.2);
     const tx = width / 2 - scale * (minX + bw / 2);
     const ty = height / 2 - scale * (minY + bh / 2);
 
