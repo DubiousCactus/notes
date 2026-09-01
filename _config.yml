@@ -155,9 +155,8 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-# "/notes" while serving as a project page (dubiouscactus.github.io/notes);
-# change to "" when the custom domain notes.theomorales.com goes live.
-baseurl: "/notes"
+# Set to "" for custom domain notes.theomorales.com
+baseurl: ""
 
 # ------------ The following options are not recommended to be modified ------------------
 

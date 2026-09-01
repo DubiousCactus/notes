@@ -10,7 +10,7 @@ export PATH="/opt/homebrew/opt/ruby@3.4/bin:$PATH"
 
 echo "========================================================"
 echo "🚀 Starting Jekyll Live Server with Auto-Regeneration"
-echo "🌐 URL: http://127.0.0.1:4000/notes/"
+echo "🌐 URL: http://127.0.0.1:4000/"
 echo "========================================================"
 echo ""
 
