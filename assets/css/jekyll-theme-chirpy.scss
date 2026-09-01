@@ -155,9 +155,30 @@ main article header h1 {
   }
 }
 
-/* ---- Images blend in: slightly rounded ---- */
-.content img {
+/* ---- Images: rounded with reactive neon glow hover ---- */
+.content img,
+.preview-img {
   border-radius: 8px;
+  cursor: zoom-in;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+}
+
+[data-bs-theme="dark"] {
+  .content img:hover,
+  .preview-img:hover {
+    box-shadow: 0 8px 25px rgba(250, 133, 143, 0.35), 0 0 15px rgba(47, 155, 183, 0.4);
+  }
+}
+
+[data-bs-theme="light"] {
+  .content img:hover,
+  .preview-img:hover {
+    box-shadow: 0 8px 22px rgba(65, 114, 98, 0.25), 0 0 12px rgba(64, 101, 220, 0.3);
+  }
 }
 
 /* ---- Home page: intro + note graph ---- */
