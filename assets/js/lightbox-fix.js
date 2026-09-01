@@ -1,31 +1,50 @@
 (function () {
-  function closeGLightbox() {
-    const gContainer = document.querySelector('.glightbox-container');
-    if (!gContainer) return;
+  function forceCloseGLightbox() {
+    const gContainers = document.querySelectorAll('.glightbox-container');
+    if (!gContainers.length) return;
 
-    // Trigger close via close button mouse event
-    const closeBtn = gContainer.querySelector('.gclose, .glightbox-close, [aria-label="Close"]');
-    if (closeBtn) {
-      const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
-      closeBtn.dispatchEvent(clickEvent);
-      if (typeof closeBtn.click === 'function') closeBtn.click();
-    }
+    gContainers.forEach((container) => {
+      // 1. Trigger close button clicks
+      const closeButtons = container.querySelectorAll('.gclose, .glightbox-close, .gbtn.gclose, [aria-label="Close"]');
+      closeButtons.forEach((btn) => {
+        try {
+          btn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+          if (typeof btn.click === 'function') btn.click();
+        } catch (err) {}
+      });
 
-    // Trigger close via overlay click if close button wasn't found
-    const overlay = gContainer.querySelector('.goverlay');
-    if (overlay) {
-      const overlayEvent = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
-      overlay.dispatchEvent(overlayEvent);
+      // 2. Trigger overlay click
+      const overlay = container.querySelector('.goverlay');
+      if (overlay) {
+        try {
+          overlay.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+          if (typeof overlay.click === 'function') overlay.click();
+        } catch (err) {}
+      }
+
+      // 3. Fallback: Force clean DOM removal if still present
+      container.classList.add('gclean');
+      setTimeout(() => {
+        if (container.parentNode) {
+          container.parentNode.removeChild(container);
+        }
+      }, 100);
+    });
+
+    document.body.classList.remove('glightbox-open');
+    document.documentElement.classList.remove('glightbox-open');
+    document.body.style.overflow = '';
+  }
+
+  function onKeyPress(e) {
+    if (e.key === 'Escape' || e.code === 'Escape' || e.keyCode === 27) {
+      forceCloseGLightbox();
     }
   }
 
-  function handleEscape(e) {
-    if (e.key === 'Escape' || e.keyCode === 27) {
-      closeGLightbox();
-    }
-  }
-
-  // Intercept Escape key during CAPTURE phase so no other listener blocks it
-  window.addEventListener('keydown', handleEscape, true);
-  window.addEventListener('keyup', handleEscape, true);
+  // Bind capturing event listeners on window and document
+  window.addEventListener('keydown', onKeyPress, true);
+  window.addEventListener('keyup', onKeyPress, true);
+  document.addEventListener('keydown', onKeyPress, true);
+  document.addEventListener('keyup', onKeyPress, true);
 })();
