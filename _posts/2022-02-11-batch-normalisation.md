@@ -7,7 +7,7 @@ tags: [deep-learning]
 math: true
 media_subpath: /assets/img/blog
 pin: false
-published: false
+published: true
 ---
 
 {% raw %}
