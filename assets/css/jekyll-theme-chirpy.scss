@@ -149,6 +149,10 @@ main article header h1 {
   border-radius: 6px;
   padding: 0.75rem 1rem 0.75rem 1.25rem;
   margin-top: 1rem;
+
+  &[class*='prompt-'] {
+    padding-left: 3.2rem;
+  }
 }
 
 /* ---- Images blend in: slightly rounded ---- */
