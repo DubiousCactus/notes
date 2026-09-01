@@ -4,6 +4,7 @@ description: "Accelerated Learning in the Context of Hand-Object Interaction —
 date: 2021-09-23 12:00:00
 categories: [hand-object-interaction]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -15,8 +16,8 @@ Classical deep-learning models need a very large amount of data to prevent overf
 
 Typically, few-shot learners can be categorized as either data augmentation, or task-based meta-learning. The principle of data augmentation is to artificially increase the amount of training samples by extrapolating from the given samples, by learning a data generator for example. For task-based meta-learning, the goal is to use the accumulated knowledge of previous tasks in order to quickly adapt to a new task[^1], by aiming for sensitivity in the learned parameters for example[^2].
 
-[^1]: [Task definition in Meta-Learning](/posts/the-neural-process-family/#task-definition-in-meta-learning)
-[^2]: [A Gentle Introduction to Meta-Learning](/posts/a-gentle-introduction-to-meta-learning/)
+[^1]: [Task definition in Meta-Learning](../the-neural-process-family/#task-definition-in-meta-learning)
+[^2]: [A Gentle Introduction to Meta-Learning](../a-gentle-introduction-to-meta-learning/)
 
 ## Motivation
 
@@ -71,7 +72,7 @@ For low-shot learning, literature have generally shown three classes of methods:
 
 Ha et al. and Krueger et al. also tried to use one neural net to produce part of the parameters of another for fast adaptation.
 
-MAML (Finn et al. 2017) ([A Gentle Introduction to Meta-Learning](/posts/a-gentle-introduction-to-meta-learning/)) and REPTILE (Nichol & Schulman 2018) use an optimization-based meta-learning approach.
+MAML (Finn et al. 2017) ([A Gentle Introduction to Meta-Learning](../a-gentle-introduction-to-meta-learning/)) and REPTILE (Nichol & Schulman 2018) use an optimization-based meta-learning approach.
 As very well explained by Rusu et al., performing adaptation in latent space to generate a simple linear layer can lead to superior generalization and better scalability to large expressive models such as residual networks.
 
 There are also probabilistic meta-learning approaches that show the advantages of learning Gaussian  posteriors over model parameters.
@@ -129,19 +130,19 @@ The question is now: should I focus on AR/VR since I obviously have the ground-t
 
 ## Requirements
 
-In [my research on joint hand-object pose estimation](/posts/accelerated-learning-in-the-context-of-hand-object-interaction/), and because my focus is on object-specific adaptation, I find myself in the need of different datasets than the typical use. There are various hand-object interaction datasets out there, but only a few meet my requirements:
+In my research on joint hand-object pose estimation, and because my focus is on object-specific adaptation, I find myself in the need of different datasets than the typical use. There are various hand-object interaction datasets out there, but only a few meet my requirements:
 1. Provide the ground-truth for the 2D or 3D hand joint poses (21 joints)
 2. Provide the ground-truth for the 6D object pose
 3. Contain several object categories/shapes; the more the better
 4. Provide RGB images
 
-For my current experiments with object-specific adaptation with [meta-learning](/posts/a-gentle-introduction-to-meta-learning/#an-in-depth-view-of-the-maml-algorithm), I need datasets that contain as many different objects as possible, in order to exploit the advantage of meta-learning methods for few-shot learning, since the goal is to demonstrate the potential increase in the ability of a model to generalize to unseen objects.
+For my current experiments with object-specific adaptation with [meta-learning](../a-gentle-introduction-to-meta-learning/#an-in-depth-view-of-the-maml-algorithm), I need datasets that contain as many different objects as possible, in order to exploit the advantage of meta-learning methods for few-shot learning, since the goal is to demonstrate the potential increase in the ability of a model to generalize to unseen objects.
 
 ## Curated list of datasets
 
 | Dataset                                                                                                                | # subjects | # frames | # objects        | Nature          | Year |
 | ---------------------------------------------------------------------------------------------------------------------- | ---------- | -------- | ---------------- | --------------- | ---- |
-| [SynthHands](http://occludedhands.com/)                                                                                | 2          | 63,350   | 7                | Synthetic       | 2017 |
+| [SynthHands](https://occludedhands.com/)                                                                                | 2          | 63,350   | 7                | Synthetic       | 2017 |
 | [FPHAD](https://github.com/guiggh/hand_pose_action)                                                                    | 6          | 100,000  | 4                | Real            | 2018 |
 | [FHAB](https://guiggh.github.io/publications/first-person-hands/)                                                      | 6          | 105,459  | 26 (4 annotated) | Real            | 2018 |
 | [ObMan](https://hassony2.github.io/obman)                                                                              | N/A        | 150,000  | 8                | Synthetic       | 2019 |
@@ -163,14 +164,14 @@ For my current experiments with object-specific adaptation with [meta-learning](
 | [EgoDexter](https://handtracker.mpi-inf.mpg.de/projects/OccludedHands/EgoDexter.htm)      | 4          | 1,485    | N/A       | Real      | 2017 | Only finger tip annotations.                               |
 | [Rendered Hand Pose (RHD)](https://lmb.informatik.uni-freiburg.de/projects/hand3d/)       | 20         | 44,700   | N/A       | Synthetic | 2017 | No object annotations.                                     |
 | [UNIPI Dataset](https://www.handcorpus.org/?p=1855)                                       | 6          | N/A      | 21        | Real      | 2018 | No object annotations, only joint angles.                  |
-| [Partially Occluded Hands](http://occludedhands.com/)                                     | N/A        | 11,840   | 148       | Real      | 2018 | No object annotations.                                     |
+| [Partially Occluded Hands](https://occludedhands.com/)                                     | N/A        | 11,840   | 148       | Real      | 2018 | No object annotations.                                     |
 | [FreiHAND](https://lmb.informatik.uni-freiburg.de/projects/freihand/)                     | N/A        | 130,3960 | N/A       | Real      | 2019 | No object annotations.                                     |
 | [ContactDB](https://contactdb.cc.gatech.edu/)                                             | 50         | 375K     | 50        | Real      | 2019 | No joint annotations.                                      |
 
 
 ---
 
-![List of RGB datasets, Huang et al.](/assets/img/blog/huang-et-al-rgb-datasets.png) [^1]
+![List of RGB datasets, Huang et al.](huang-et-al-rgb-datasets.png) [^1]
 
 [^1]:  [Survey on depth and RGB image-based 3D hand shape and pose estimation (Huang et al. 2021)](https://doi.org/10.1016/j.vrih.2021.05.002)
 {% endraw %}

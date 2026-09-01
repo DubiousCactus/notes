@@ -4,6 +4,7 @@ description: "The Variational Autoencoder — notes by Théo Morales"
 date: 2023-09-15 12:00:00
 categories: [deep-learning, variational-inference]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -13,8 +14,8 @@ pin: false
 
 ## Information theory, entropy and KL-Divergence
   
-[The information bottleneck](/posts/the-information-bottleneck/)
-[Shannon's Entropy](/posts/shannons-entropy/)
+[The information bottleneck](../the-information-bottleneck/)
+[Shannon's Entropy](../shannons-entropy/)
 
 ### Reconstruction loss
 Why? To encode meaningful features and not just random vectors of course.
@@ -23,13 +24,13 @@ Why? To encode meaningful features and not just random vectors of course.
 Why do we use the KLD to enforce a prior close to zero-mean Gaussian with unit variance? Well because we want to enforce all the encodings to be close together, otherwise they may drift apart in the manifold and we wouldn't be able to interpolate in latent space! It would create something quite discontinuous with huge gaps between groups of latent variables that would represent nothing!
 That's because the features all vary in some way (some my be similar to each other). So the representations (latents z) would vary accordingly: differences between samples that can't be exaplined as noise would push the means apart to allow sampling distinct subclasses.
 "[So, the **semantic features** come from trying to best represent N most semantically salient _variables in the training data_ (as extracted by the preceding encoder layers).](https://stats.stackexchange.com/questions/346387/why-does-enforcing-a-prior-distribution-create-semantic-latent-variables-in-vari?rq=1)".
-[Kullback-Leibler Divergence](/posts/kullback-leibler-divergence/)
+[Kullback-Leibler Divergence](../kullback-leibler-divergence/)
 
 ## Latent Variable Models
-[Latent Variable Models](/posts/latent-variable-models/)
+[Latent Variable Models](../latent-variable-models/)
 
 ## ELBO loss
-[Evidence Lowerbound (ELBO)](/posts/evidence-lowerbound-elbo/)]
+[Evidence Lowerbound (ELBO)](../evidence-lowerbound-elbo/)]
 
 
 ## VAEs in practice

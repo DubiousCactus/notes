@@ -4,6 +4,7 @@ description: "Gaussian Processes from A to Z — notes by Théo Morales"
 date: 2022-10-24 12:00:00
 categories: [gaussian-neural-processes]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -21,7 +22,7 @@ One can see the phenomenon of waves in the ocean as a stochastic process due to 
 
 The idea is to place a prior over the space of functions $$y(x)$$ without parameterizing them. In fact, the simplest type of function prior is a Gaussian Process. A Gaussian Process can model a Stochastic Process as a multivariate Gaussian distribution. By conditioning a GP on some observations of one realization $$y(x)$$ of the process, we can sample functions $$\mathbf{f}$$ from the posterior process:
 
-![Gaussian Process](/assets/img/blog/gaussian-process.svg)
+![Gaussian Process](gaussian-process.svg)
 One main advantage of the GP is that **it is a non-parametric model**: it does not have any parameters representing anything physical about the data. A GP only has *hyperparameters* which parameterize the priors of its Gaussian distribution. But why the Gaussian distribution? We'll dive into that in the next section.
 
 ## The Gaussian distribution
@@ -68,7 +69,7 @@ $$
 
 Thus, this matrix describes the relationship between the variables or how they move together. When looking at a pair of random variables $$(X_1,X_2)$$, their correlation is positive if $$X_1$$ increases with $$X_2$$. It is negative if $$X_2$$ decreases as $$X_1$$ increases, and it is neutral or $$0$$ if the movement of $$X_1$$ does not influence that of $$X_2$$ (and vice versa).
 
-![3 correlations](/assets/img/blog/3-correlations.svg)
+![3 correlations](3-correlations.svg)
 The covariance matrix has three main properties:
 - It is a square matrix with $$N$$ rows and columns for $$N$$ random variables.
 - It is symmetric by definition: the function $$Cov(X_i, X_j)$$ populates each cell of the matrix, where $$Cov(X_i, X_j)=Cov(X_j, X_i)$$. Its transpose is thus equal to itself, and its diagonal entries are the variance of each random variable.
@@ -98,7 +99,7 @@ $$
 
 The following figure depicts a $$2$$-dimensional Gaussian distribution from which one can sample a random vector $$X$$ composed of two random variables $$X_1$$ and $$X_2$$.
 
-![Multivariate Gausssian](/assets/img/blog/multivariate-gausssian.svg)
+![Multivariate Gausssian](multivariate-gausssian.svg)
 
 ### Stochastic processes as multivariate Gaussians
 We know that a stochastic process amounts to a *collection of random variables defined on the same probability space*. That is what multivariate distributions are; how convenient! 
@@ -271,7 +272,7 @@ Since *the Gaussian Process is essentially a prior over functions*, the mean and
 
 All kernel functions are parameterized by a process variance $$\sigma^2$$ and a lengthscale $$l$$ which determines how close $$x$$ and $$x^\prime$$ must be to influence each other, as seen in the following figure. There is still a lot to cover about covariance functions. For that, I will redirect you to [this excellent blog post](https://peterroelants.github.io/posts/gaussian-process-kernels/) by [Peter Roelants](https://twitter.com/PeterRoelants).
 
-![exp_kernels](/assets/img/blog/exp-kernels.svg)
+![exp_kernels](exp-kernels.svg)
 
 We now know how to define a GP and specify priors to obtain an accurate distribution over functions. But this seems pointless if we need to know the overall shape of the function that we want to learn!
 **The idea is actually to specify vague priors with parameters**, which amounts to *adding hyperparameters to the Gaussian Process.* **By over-parameterizing the prior functions, we can wrap a large family of processes** such that optimizing the GP leads to finding hyperparameters that fit the random process accurately. We'll look at this in the following section.
@@ -317,7 +318,7 @@ $$
 > 
 >The log marginal likelihood is the probability of the data given the hyperparameters: a *conditional distribution* where **we assume a Gaussian distribution for the data**. By marginalizing over the hyperparameters of the GP in weight-space view, we obtain the marginal likelihood.[^3]
 
-**The prior specification can therefore be automated** through model selection from a set of priors, or using composable functions, **without ever having to use expert knowledge**. A research paper demonstrated how a genetic algorithm could effectively construct kernel functions from primitives and match hand-tuned kernels, whereas another used a [meta-learning](/posts/a-gentle-introduction-to-meta-learning/) approach to learn the priors.[^4][^5]
+**The prior specification can therefore be automated** through model selection from a set of priors, or using composable functions, **without ever having to use expert knowledge**. A research paper demonstrated how a genetic algorithm could effectively construct kernel functions from primitives and match hand-tuned kernels, whereas another used a [meta-learning](../a-gentle-introduction-to-meta-learning/) approach to learn the priors.[^4][^5]
 
 [^4]: [Kronberger et al., 2013: Evolution of Covariance Functions for Gaussian Process Regression using Genetic Programming](https://arxiv.org/abs/1305.3794)
 [^5]: [Harrison et al., 2018: Meta-Learning Priors for Efficient Online Bayesian Regression](https://arxiv.org/abs/1807.08912)
@@ -366,7 +367,7 @@ Note that we only have the indexes of the targets (i.e. time steps $$t_i$$), of 
 
 An important point to raise is that the posterior covariance is the covariance of the targets **minus** a positive term which is a function of the observations. Thus, the posterior covariance will always be smaller than the prior covariance: the observations effectively *reduce the uncertainty*.
 
-![observations](/assets/img/blog/observations.svg)
+![observations](observations.svg)
 
 Notice that computing the posterior distribution involves inverting the covariance matrix, which often leads to numerical instabilities with floating point numbers.
 
@@ -417,7 +418,7 @@ $$
 $$
 
 
-Since $$\Sigma$$ is square, symmetric and positive-semidefinite, it is invertible. Thus, **its inverse $$\Sigma^{-1}$$ is square and symmetric** as well. A property of any symmetric matrix $$A$$ is that $$x^TAy = y^TAx$$ (see my [Proof of matrix-vector multiplication commutativeness for a symmetric matrix](/posts/proof-of-matrix-vector-multiplication-commutativeness-for-a-symmetric-matrix/)).
+Since $$\Sigma$$ is square, symmetric and positive-semidefinite, it is invertible. Thus, **its inverse $$\Sigma^{-1}$$ is square and symmetric** as well. A property of any symmetric matrix $$A$$ is that $$x^TAy = y^TAx$$ (see my [Proof of matrix-vector multiplication commutativeness for a symmetric matrix](../proof-of-matrix-vector-multiplication-commutativeness-for-a-symmetric-matrix/)).
 Thus, $$a^T \Sigma^{-1}b$$ **should equal** $$b^T \Sigma^{-1}a$$, but because the inversion of $$\Sigma$$ is not entirely accurate, *$$\Sigma^{-1}$$ is not truly symmetric: the relationship does not hold.* We end up with a matrix `K_test` which is not symmetric either.
 
 Ultimately, it is worth knowing that these issues have non-significant impacts on the samples drawn from the posterior distribution parameterized by such a covariance matrix. In fact, with `np.random.multivariate_normal(mu, K_test)`, NumPy will throw warnings that can be disabled. It may still be worth fixing positive semi-definiteness to avoid unwanted behaviour.
@@ -445,7 +446,7 @@ The primary disadvantage against other machine learning methods is the need to s
 
 Another drawback of this method is its computational complexity. It scales cubically in terms of dataset size or dimensionality, which goes against modern problems. Indeed, we are facing high-dimensional and data-hungry pattern recognition problems (i.e. face recognition, autonomous driving, sentiment analysis, language modelling, etc.), and we need methods that scale. Although some works have attempted to address these issues, paradigms that shift towards deep learning seem to take the upper hand.[^9] Furthermore, GPs cannot model a broad range of stochastic processes like natural images.[^9]
 
-All in all, deep learning is taking over pattern recognition and is surpassing more engineered methods for high-dimensional problems. However, there has been a surge of interest in [The Neural Process Family](/posts/the-neural-process-family/), which mary the best of both worlds from Gaussian Processes and Deep Learning. Understanding this mathematically sound method is a valued asset to whoever wishes to dive into this fresh wave of regression methods.
+All in all, deep learning is taking over pattern recognition and is surpassing more engineered methods for high-dimensional problems. However, there has been a surge of interest in [The Neural Process Family](../the-neural-process-family/), which mary the best of both worlds from Gaussian Processes and Deep Learning. Understanding this mathematically sound method is a valued asset to whoever wishes to dive into this fresh wave of regression methods.
 
 [^9]: [Garnelo et al., 2018: Conditional Neural Processes](https://arxiv.org/abs/1807.01613)
 

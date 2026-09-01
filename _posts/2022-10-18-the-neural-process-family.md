@@ -4,11 +4,12 @@ description: "The Neural Process Family — notes by Théo Morales"
 date: 2022-10-18 12:00:00
 categories: [gaussian-neural-processes]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
 {% raw %}
-This post is a follow-up on the [Gaussian Processes from A to Z](/posts/gaussian-processes-from-a-to-z/) article. You are welcome to read it before continuing with the Neural Process Family.
+This post is a follow-up on the [Gaussian Processes from A to Z](../gaussian-processes-from-a-to-z/) article. You are welcome to read it before continuing with the Neural Process Family.
 
 ### The ideal solution
 

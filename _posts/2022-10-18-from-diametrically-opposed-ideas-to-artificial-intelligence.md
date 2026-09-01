@@ -4,6 +4,7 @@ description: "From Diametrically Opposed Ideas to Artificial Intelligence — no
 date: 2022-10-18 12:00:00
 categories: [conversations]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -17,7 +18,7 @@ pin: false
 *— “But what does it even mean to be diametrically opposed?”*
 
 
-![Diameter](/assets/img/blog/diameter.svg)
+![Diameter](diameter.svg)
 
 Let us start with the definition of diameter. One way to define it is: the segment of which the two ends are adjacent to a circle's perimeter, and whose length is maximal. It can be seen as the maximum distance between two points on a circle. This applies to spheres in three dimensions. Thus, *diametrically opposed* means opposed by the maximum *distance* in a straight line, and by analogy to the circle: on opposite sides.
 
@@ -29,7 +30,7 @@ In fact, not only is it possible, but it is a common thing to do in the field of
 Just like we can plot 8 points in 3D space to form a cube, we can plot words or pictures too! 
 
 
-![Shared vector space](/assets/img/blog/shared-vector-space.svg)
+![Shared vector space](shared-vector-space.svg)
 #### Too abstract? Let's flatten things out and think in 2D.
 A point in space is typically represented by its coordinates, $$x$$ and $$y$$ for 2D planes, which correspond to the point's position on each axis: the $$X-$$axis and the $$Y-$$axis. This space is referred to as *Euclidean*[^2], where we can apply *Euclidean geometry*, the one you learn in primary school. However, those two axes do not *have to* represent absolute, meaningless, position on two lines. 
 They can also represent other concepts, such as the price of a house and its square-footage. When stripped with the meaning of absolute position in a space, such points live in what we call a *“vector space”*. In fact, they are not called points any more, but *vectors*. In this space, vectors can be added, multiplied or subtracted together. They have additional properties that are absent from *“Euclidean space”*. 
@@ -49,12 +50,12 @@ As such, two words identified by two different numbers can be embedded in a *vec
 
 *“Ooh I see! So Artificial Intelligence works by association of ideas?”*[^3]
 
-![dogs vs cats](/assets/img/blog/dogs-vs-cats.svg)
+![dogs vs cats](dogs-vs-cats.svg)
 
-In a way, yes! The idea of artificial neural networks, in this field that we call *Deep Learning*, is to represent concepts in a space, such that new concepts can be assimilated with previously seen ones. To classify pictures of cats and dogs, for instance, a neural network learns to embed pictures of cats such that they are close together in space, while pictures of dogs are clustered together in another region of the space. Given a previously unseen image of a dog, the neural network embeds it according to its learning, and simply compares the distance[^4] with both clusters: it decides that it must be a dog because the distance to the dogs cluster is smaller than the one to the cats cluster. This is an oversimplification of how neural networks work, although that is precisely how Prototypical Networks learn new concepts with very little examples [^5]! See my post on meta-learning for a closer look at this family of methods: [A Gentle Introduction to Meta-Learning](/posts/a-gentle-introduction-to-meta-learning/).
+In a way, yes! The idea of artificial neural networks, in this field that we call *Deep Learning*, is to represent concepts in a space, such that new concepts can be assimilated with previously seen ones. To classify pictures of cats and dogs, for instance, a neural network learns to embed pictures of cats such that they are close together in space, while pictures of dogs are clustered together in another region of the space. Given a previously unseen image of a dog, the neural network embeds it according to its learning, and simply compares the distance[^4] with both clusters: it decides that it must be a dog because the distance to the dogs cluster is smaller than the one to the cats cluster. This is an oversimplification of how neural networks work, although that is precisely how Prototypical Networks learn new concepts with very little examples [^5]! See my post on meta-learning for a closer look at this family of methods: [A Gentle Introduction to Meta-Learning](../a-gentle-introduction-to-meta-learning/).
 
 [^3]: https://en.wikipedia.org/wiki/Association_of_ideas
-[^4]: We actually use the *cosine similarity* as a distance measure between two vectors, derived from the dot-product of two vectors (see [The Scaled Dot-Product Attention function](/posts/attention-is-all-you-need/#the-scaled-dot-product-attention-function)). 
+[^4]: We actually use the *cosine similarity* as a distance measure between two vectors, derived from the dot-product of two vectors (see [The Scaled Dot-Product Attention function](../attention-is-all-you-need/#the-scaled-dot-product-attention-function)). 
 [^5]: Snell, Jake et al. “Prototypical Networks for Few-shot Learning.” _NIPS_ (2017).
 
 
@@ -66,7 +67,7 @@ Well, yes and no. The association of ideas paradigm is a good simplification of 
 
 Deep Learning and neural networks are an efficient and effective way to recognize patterns on a large scale (image and videos for instance), but they require humongous quantities of data to learn. 
 With neural networks, generalization $$-$$ the ability to recognize patterns outside their training examples $$-$$ remains a challenge to solve. These models are trained by showing them many examples of the archetypes of what we wish them to understand (*i.e.,* cats and dogs). When deployed in the real world, we need them to recognize these archetypes on examples that were not in their training data: this is what learning is all about!
-The family of methods introduced in [A Gentle Introduction to Meta-Learning](/posts/a-gentle-introduction-to-meta-learning/) directly addresses this issue.
+The family of methods introduced in [A Gentle Introduction to Meta-Learning](../a-gentle-introduction-to-meta-learning/) directly addresses this issue.
 
 There are many other methods that fall under the umbrella of Artificial Intelligence, or what should really be called *Machine Learning*. For many real-world challenges, simpler methods are better suited than neural networks. But if your only tool is a hammer, then every problem looks like a nail.
 {% endraw %}

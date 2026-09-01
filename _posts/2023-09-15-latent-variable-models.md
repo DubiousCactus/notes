@@ -4,6 +4,7 @@ description: "Latent Variable Models — notes by Théo Morales"
 date: 2023-09-15 12:00:00
 categories: [deep-learning, variational-inference]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -24,7 +25,7 @@ The idea is to define a deterministic model f(z;theta), which produces samples v
 So basically we want to encourage continuity in the latent space. (TODO: Verify this intuition. Is it really what's going on here??)
 
 
-So what is the approximative distribution here? Are we trying to approximate P(X) with P(Z) or with theta? Well I think you just answered it: theta parameterizes a deterministic function, so by definition it's not a probability distribution. The latent distribution P(Z) is the one that will learn the information lower bound to transmit to the decoder f(z;theta). By increasing the entropy of P(Z), we can reduce its information content but keep it to the minimum using the [KL divergence](/posts/kullback-leibler-divergence/) (minimizing the information loss).
+So what is the approximative distribution here? Are we trying to approximate P(X) with P(Z) or with theta? Well I think you just answered it: theta parameterizes a deterministic function, so by definition it's not a probability distribution. The latent distribution P(Z) is the one that will learn the information lower bound to transmit to the decoder f(z;theta). By increasing the entropy of P(Z), we can reduce its information content but keep it to the minimum using the [KL divergence](../kullback-leibler-divergence/) (minimizing the information loss).
 
 
 We aim to maximize the probability of each X in the training set under the entire generative process, via *maximal likelihood*, according to

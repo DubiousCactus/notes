@@ -4,6 +4,7 @@ description: "Supervised Learning in a Bayesian Framework — notes by Théo Mor
 date: 2022-01-21 12:00:00
 categories: [deep-learning]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 

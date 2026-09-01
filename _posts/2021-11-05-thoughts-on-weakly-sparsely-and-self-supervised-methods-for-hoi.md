@@ -4,6 +4,7 @@ description: "Thoughts on weakly, sparsely and self supervised methods for HOI â
 date: 2021-11-05 12:00:00
 categories: [hand-object-interaction]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 

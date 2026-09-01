@@ -4,6 +4,7 @@ description: "Shannon's Entropy — notes by Théo Morales"
 date: 2023-09-15 12:00:00
 categories: [mathematical-foundations, information-theory]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -55,7 +56,7 @@ $$
 
 
 
-where $$P(X=x_i)$$ is the probability of event $$x_i$$ to occur, given the PDF/PMF $$p(X)$$ (see [Probabilities 101](/posts/probabilities-101/) for the PDF and PMF).
+where $$P(X=x_i)$$ is the probability of event $$x_i$$ to occur, given the PDF/PMF $$p(X)$$ (see [Probabilities 101](../probabilities-101/) for the PDF and PMF).
 
 A distribution with relatively spread out probability mass (information) has an exponentially higher entropy than one with all its mass concentrated around a single point.
 
@@ -81,17 +82,17 @@ Therefore, we can use $$\log_2$$ to measure the entropy of a distribution of $$N
 
 When considering binary files, $$h(x)$$ is **the compressed file length to which we should aspire**[^1].
 
-[^1]: Davic McKay, [Course on Information Theory, Pattern Recognition, and Neural Networks](http://videolectures.net/mackay_course_02/)
+[^1]: Davic McKay, [Course on Information Theory, Pattern Recognition, and Neural Networks](https://videolectures.net/mackay_course_02/)
 
 ### Why the logarithm?
 
 The information content is the same thing as the measure of uncertainty associated with an outcome. Due to its properties, such that the logarithm of a product is the sum of the logarithms, the logarithm is a perfect fit for a measure of uncertainty. Primarily, it is common that adding parameters to a system makes its number of possible states grow exponentially. Inversely, the number of parameters tend to vary linearly with the logarithm of the number of possible states. This gives a more intuitive measure which works really well with the properties of the logarithm and the information content being additive.
 
-![entropy plot](/assets/img/blog/entropy-plot.svg)
+![entropy plot](entropy-plot.svg)
 In effect, more certainty - or probability - over an event exponentially increases its logarithm (for all $$0 \le p_i \le 1$$),  hence we can imagine two general cases:
 1. A distribution with a spike for one event and *very low* probabilities for others will have a *very low* entropy: this is due to the negative summation. There is **almost no surprise** to the outcome!
 2. A more uniform distribution with more or less equal probabilities will have a *very high* entropy: there is **a high surprise** as to the outcome!
 
 
-The entropy is an essential measure for Information Theory, the field of Computer Science that studies how information can be compressed and [extracted](/posts/the-information-bottleneck/). In Deep Learning, it is the foundation of [The Variational Autoencoder](/posts/the-variational-autoencoder/) and is at the core of the [Kullback-Leibler Divergence](/posts/kullback-leibler-divergence/).
+The entropy is an essential measure for Information Theory, the field of Computer Science that studies how information can be compressed and [extracted](../the-information-bottleneck/). In Deep Learning, it is the foundation of [The Variational Autoencoder](../the-variational-autoencoder/) and is at the core of the [Kullback-Leibler Divergence](../kullback-leibler-divergence/).
 {% endraw %}

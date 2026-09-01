@@ -4,6 +4,7 @@ description: "The information bottleneck — notes by Théo Morales"
 date: 2023-09-15 12:00:00
 categories: [mathematical-foundations, information-theory]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -11,7 +12,7 @@ pin: false
 ## Introduction
 
 The primary goals of information theory is to quantify how much information is in data.
-Claude Shannon, the father of Information Theory, introduced the concept based on a measure called [entropy](/posts/shannons-entropy/).
+Claude Shannon, the father of Information Theory, introduced the concept based on a measure called [entropy](../shannons-entropy/).
 
 ## The standard information bottleneck
 

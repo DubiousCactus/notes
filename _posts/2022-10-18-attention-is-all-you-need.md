@@ -4,6 +4,7 @@ description: "Attention is all you need — notes by Théo Morales"
 date: 2022-10-18 12:00:00
 categories: [attention-is-all-you-need]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -39,7 +40,7 @@ $$
 Effectively, the attention mechanism can be seen as a multiplicative module that switches on or off the components of a variable. The weights vector, $$w$$ , can be interpreted as probabilities which mask out or attenuate parts of the input.
 When this module is applied to a sequence of variables as such:
 
-![attention_module.excalidraw](/assets/img/blog/attention-moduleexcalidraw.svg)
+![attention_module.excalidraw](attention-moduleexcalidraw.svg)
 where $$w$$ is computed from $$z$$ through the softmax function. Using the logistic function allows to *smoothly* blend variables by disabling or enabling specific components of each.
 
 In short, attention within a neural network can be used to switch on or off parts of the network, or components of a variable, via multiplicative interaction. 
@@ -51,7 +52,7 @@ The **Attention mechanism**, the central part of many transductive models, consi
 > An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.[^1]
 
 
-[^1]: [Attention Is All You Need (Vaswani et al.)](http://arxiv.org/abs/1706.03762)
+[^1]: [Attention Is All You Need (Vaswani et al.)](https://arxiv.org/abs/1706.03762)
 
 There are mainly two versions of attention: *additive attention* and *multiplicative (or dot-product) attention*. The former computes the compatibility function via a 1-hidden-layer MLP, which is rather costly, while the latter is a dot-product that can be highly optimized. The Transformer architecture uses a *scaled* dot-product attention function.
 
@@ -95,7 +96,7 @@ In the end, for the case of NLP, the queries, keys and values are all the same w
 
 ### The dot-product
 
-![Dot product diagram](/assets/img/blog/dot-product-diagram.svg)
+![Dot product diagram](dot-product-diagram.svg)
 
 The dot-product between two vectors $$\mathbf{a}$$ and $$\mathbf{b}$$ is defined as:
 
@@ -125,7 +126,7 @@ $$
 
 where $$z_i$$ are the elements of the input vector, and $$e$$ is the Euler number of the exponential function. The denominator is the normalization term which ensures that all the output values of the function will sum up to $$1$$, thus constituting a valid probability distribution. Softmax normalizes the weights, but it makes large values larger via the exponential function, as the following figure[^3] illustrates:
 
-![The Softmax function in the scaled dot-product attention.](/assets/img/blog/softmax.png)
+![The Softmax function in the scaled dot-product attention.](softmax.png)
 
 [^3]: [Attention Approximates Sparse Distributed Memory](https://www.youtube.com/watch?v=THIIk7LR9_8)
 
@@ -143,7 +144,7 @@ $$
 
 However, this operation is done $$h$$ times with each different weight matrices, so that it can learn different representations. This becomes useful when the scaled dot-product attention is computed in parallel for each resulting $$Q, K, V$$ matrices, before concatenating the final attention weights.
 
-![Single Attention vs Multi-Head Attention.](/assets/img/blog/attention-vs-mha.png)[^1]
+![Single Attention vs Multi-Head Attention.](attention-vs-mha.png)[^1]
 
 As defined by Vaswani et al.[^1],
 
@@ -166,12 +167,12 @@ $$
 We can use the analogy of the layered structure of CNNs to motivate Multi-Head attention: as we go deeper in the network, the receptive field increases. 
 
 
-[^1]: [Attention Is All You Need (Vaswani et al.)](http://arxiv.org/abs/1706.03762)
+[^1]: [Attention Is All You Need (Vaswani et al.)](https://arxiv.org/abs/1706.03762)
 
 # The Transformer architecture
 
 Now that we understand attention, and more specifically the **Multi-Head Attention mechanism**, we can insert it into its context in the following Transformer encoder-decoder architecture:
-![transformer](/assets/img/blog/transformer.png)[^1]
+![transformer](transformer.png)[^1]
 
 However there are a few things that we missed:
 - **Positional Encoding:** it is helpful for the transformer to have a notion of position and order for the tokens in the sequence of inputs, therefore an optionally learned position embedding is added to the input/output embeddings. The original Transformer architecture uses fixed sine and cosine functions of different frequencies, but the Vision Transformer[^3], for instance, uses learned embeddings that are appended to the latent embeddings.
@@ -179,7 +180,7 @@ However there are a few things that we missed:
 - **Layer Norm:** Important for the cosine similarity, but can be improved with L2 norm.[^2]
 
 [^2]: [Attention Approximates Sparse Distributed Memory](https://www.youtube.com/watch?v=THIIk7LR9_8)
-[^3]: [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (Dosovitskiy et al.)](http://arxiv.org/abs/2010.11929)
+[^3]: [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (Dosovitskiy et al.)](https://arxiv.org/abs/2010.11929)
 
 ## Auto-associativity vs hetero-associativity
 

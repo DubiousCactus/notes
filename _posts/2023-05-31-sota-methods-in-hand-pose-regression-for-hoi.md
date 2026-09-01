@@ -4,6 +4,7 @@ description: "SOTA methods in hand pose regression for HOI — notes by Théo Mo
 date: 2023-05-31 12:00:00
 categories: [hand-object-interaction]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -24,7 +25,7 @@ For all joint-based metrics, we use the 16 biological hand joints + 5 finger tip
 
 ## Benchmarks
 
-This section is a non-exhaustive list of commonly used benchmarks for hand pose regression in object interaction, or joint hand-object pose regression. For a more up-to-date list of available datasets and benchmarks, have a look at my other post: [Curated list of datasets](/posts/curated-list-of-datasets/).
+This section is a non-exhaustive list of commonly used benchmarks for hand pose regression in object interaction, or joint hand-object pose regression. For a more up-to-date list of available datasets and benchmarks, have a look at my other post: [Curated list of datasets](../curated-list-of-datasets/).
 
 - **HO-3D**: 3rd person images of subjects manipulating objects with one hand. Objects come from the YCB dataset.
 	- **CHALLENGE**: Version of the benchmark adapted for the challenge introduced in blabla et al 20bla. The ground truth wrist position of the test images is provided (I assumed this means the joint error is root-aligned). There are several evaluation benchmarks (test splits) proposed, such as:

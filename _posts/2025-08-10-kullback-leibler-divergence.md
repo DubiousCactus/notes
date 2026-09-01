@@ -4,6 +4,7 @@ description: "Kullback-Leibler Divergence — notes by Théo Morales"
 date: 2025-08-10 12:00:00
 categories: [mathematical-foundations, information-theory]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -15,11 +16,11 @@ pin: false
 
 
 Information Theory is a branch of Computer Science aimed to study how information can be quantified in data.
-Claude Shannon, the father of Information Theory, introduced the concept based on a measure called [entropy](/posts/shannons-entropy/). This measure allows us to calculate the minimum amount of information required to transmit a message, hence enabling us to compress data.
+Claude Shannon, the father of Information Theory, introduced the concept based on a measure called [entropy](../shannons-entropy/). This measure allows us to calculate the minimum amount of information required to transmit a message, hence enabling us to compress data.
 However, it is just a measure and we still need to find the encoding scheme that leads to this compression. Entropy tells us the theoretical lower bound on the number of bits needed to encode the message, thus we can measure the information content of our data.
 
 When working with complex and high dimensional problems, we often replace observed data or a complex and intractable distribution with a simpler approximative one. 
-Being able to quantify **the information content** in the true data distribution, we want to quantify how much information is lost when we substitute our observed distribution for a parameterized approximation. The Kullback-Leibler (KL) divergence can be seen as the average additional bits per datum required to compress a true data distribution into a compressed one. (TODO: Isn't it the opposite???) [The information bottleneck](/posts/the-information-bottleneck/) allows us to extract the information from the 
+Being able to quantify **the information content** in the true data distribution, we want to quantify how much information is lost when we substitute our observed distribution for a parameterized approximation. The Kullback-Leibler (KL) divergence can be seen as the average additional bits per datum required to compress a true data distribution into a compressed one. (TODO: Isn't it the opposite???) [The information bottleneck](../the-information-bottleneck/) allows us to extract the information from the 
 
 ## Measuring information loss
 
@@ -68,9 +69,9 @@ A direct observation from this breakdown is that **the divergence is not a dista
 >Revisit the following. The diagram is very stupid because the entropy of an ensemble corresponds to the average information content in that ensemble!!
 
 
-It means that **a positive divergence means a loss of information** while a **negative divergence means an information gain**, which is not something you would expect of an approximating distribution.[[]()]()
+It means that **a positive divergence means a loss of information** while a **negative divergence means an information gain**, which is not something you would expect of an approximating distribution.
 
-![entropy vs information](/assets/img/blog/entropy-vs-information.svg)
+![entropy vs information](entropy-vs-information.svg)
 #### The order matters
 
 > 

@@ -4,6 +4,7 @@ description: "Entangled poses, Manifolds, and Neural Networks — notes by Théo
 date: 2022-09-15 12:00:00
 categories: [deep-learning, manifolds-neural-networks]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -30,7 +31,7 @@ Hand-Object Pose can be thought of as 3D data points that are under conditioned 
 High-dimensional hand-object pose samples of manipulations of the **same object** live in a low-dimensional manifold embedded within the high-dimensional space, because the rigid object's geometry reduces the degrees of freedom of the hand and object poses. Due to the complex relationships between the hand-object pose and the pixel intensities, this manifold will be highly nonlinear.
 
 *The goal* is ultimately to reduce the degrees of freedom of variability within the manifold. Deep Neural Networks learn to do that from the data, by embedding each point into lower-dimensional manifolds, sometimes after projecting them into higher-dimensional spaces so that the original Euclidean space becomes an embedded manifold which can be unlinked. I am trying to make this all fit into my research on 
-[Accelerated Learning in the Context of Hand-Object Interaction](/posts/accelerated-learning-in-the-context-of-hand-object-interaction/).
+[Accelerated Learning in the Context of Hand-Object Interaction](../accelerated-learning-in-the-context-of-hand-object-interaction/).
 
 ## The manifold hypothesis
 
@@ -48,7 +49,7 @@ High-dimensional hand-object pose samples of manipulations of the **same object*
 
 Let's consider the case of visual object representation, where we have several classes of objects, all of which containing variations of themselves in terms of appearance, orientation, context, etc. We want to define an object manifold as a subspace of the feature space, where all instances of the same class belong. As defined by Chung[^4], an object manifold can be regarded as the convex hull of the point cloud representing such variations. This is a relatively simplistic view that differs from the pure mathematical definition of a manifold[^2].
 
-![A geometric view of object manifolds.](/assets/img/blog/obj-manifold.png)[^4]
+![A geometric view of object manifolds.](obj-manifold.png)[^4]
 
 A point in the manifold (one instance of an object class) can be represented as
 
@@ -60,7 +61,7 @@ where $$\bf{x}_0^\mu \in \mathcal{R}^N$$ is the center of the object manifold in
 
 ### Visual object recognition in the brain
 
-![neural_rep](/assets/img/blog/neural-rep.png)[^3]
+![neural_rep](neural-rep.png)[^3]
 
 [^3]: [How Does the Brain Solve Visual Object Recognition? (DiCarlo et al.)](https://neurophysics.ucsd.edu/courses/physics_171/rust.pdf)
 {% endraw %}

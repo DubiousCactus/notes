@@ -4,6 +4,7 @@ description: "Activation functions — notes by Théo Morales"
 date: 2022-02-11 12:00:00
 categories: [deep-learning]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -30,7 +31,7 @@ $$
 The ReLU -- **Rectifying** Linear Unit -- function acts as a switch inside a neural network, a simple detector if you will. It simply lets information flow above a certain threshold, and allows each neuron in a neural network to "detect" and capture specific signals, parameterised by the learnt weights.
 It plays the role as a diode -- a **rectifier** -- in electronics: it lets current flow beyond a certain threshold. This threshold is typically encoded in the bias of the neuron, but the complete affine transformation is what filters the signal.
 
-The linearity of ReLUs is also very useful to combat vanishing and exploding gradients, as discussed in [Batch Normalisation](/posts/batch-normalisation/).
+The linearity of ReLUs is also very useful to combat vanishing and exploding gradients, as discussed in [Batch Normalisation](../batch-normalisation/).
 
 
 ## Softmax for logistic regression
@@ -50,7 +51,7 @@ $$
 
 where $$z_i$$ are the elements of the input vector, and $$e$$ is the Euler number of the exponential function. The denominator is the normalization term which ensures that all the output values of the function will sum up to $$1$$, thus constituting a valid probability distribution. Softmax normalizes the weights, but it makes large values larger via the exponential function, as the following figure[^3] illustrates:
 
-![The Softmax function in the scaled dot-product attention.](/assets/img/blog/softmax.png)
+![The Softmax function in the scaled dot-product attention.](softmax.png)
 
 [^3]: [Attention Approximates Sparse Distributed Memory](https://www.youtube.com/watch?v=THIIk7LR9_8)
 

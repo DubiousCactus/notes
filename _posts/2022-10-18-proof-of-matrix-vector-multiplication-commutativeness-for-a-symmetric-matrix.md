@@ -4,6 +4,7 @@ description: "Proof of matrix-vector multiplication commutativeness for a symmet
 date: 2022-10-18 12:00:00
 categories: [mathematical-foundations, linear-algebra]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 

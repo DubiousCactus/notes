@@ -4,6 +4,7 @@ description: "A Gentle Introduction to Meta-Learning — notes by Théo Morales"
 date: 2022-10-18 12:00:00
 categories: [meta-learning]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
@@ -37,18 +38,18 @@ In the multi-task meta-learning scenario, the model should adapt to a distributi
 
 Thus, for Meta-Learning to be applicable, all tasks must share similarities and the training and testing conditions must be consistent. If a Deep Neural Network were trained with an inconsistent number of examples for each task, the network would not learn to learn efficiently and it would have inconsistent performance across the different tasks.
 
-One approach, called Model-Agnostic Meta-Learning (MAML), trains a Deep Neural Network simultaneously on a group of tasks. This way, MAML trains the network to learn common patterns across similar tasks. The network encodes general knowledge that enables it to learn a novel concept rapidly and with few examples. MAML has an outer loop and an inner loop.![MAML Flowchart](/assets/img/blog/maml-flowchart.svg) 
+One approach, called Model-Agnostic Meta-Learning (MAML), trains a Deep Neural Network simultaneously on a group of tasks. This way, MAML trains the network to learn common patterns across similar tasks. The network encodes general knowledge that enables it to learn a novel concept rapidly and with few examples. MAML has an outer loop and an inner loop.![MAML Flowchart](maml-flowchart.svg) 
 The inner loop trains the network in a classical manner, as a single-task objective, on a small set of examples then evaluates this network on a slightly larger set of validation examples. Between each single-task training, the network’s parameters are reset to their initial inner loop state at a step t, as to evaluate the training efficiency on each task from the same initial parameter values. The loss, a value representing the prediction error on the validation examples, is accumulated over a batch of tasks in this inner loop training phase. A large loss would indicate a poor choice of initial parameter values, resulting in inefficient training for any given task. Therefore, this loss represents the goodness of network initialization (the value of its parameters before training for a new task) for fast training with few examples on a novel task. In the outer loop, this total loss is directly used to derive the updated model parameters, with an algorithm such as stochastic gradient descent which computes the right change in each parameter’s value that decreases the error value. In essence, it can be seen as finding the right spot in a valley - the network initialisation - such that the distance to each mountain’s peak - the inner loop training loss - would be minimal: finding that spot is done in the outer loop, with the total distance to each peak calculated in the inner loop. At every training step, a new valley with a different set of mountain peaks is given (a batch of tasks), and the starting spot (the network parameters) gets better by each iteration.
 
 
 ## An in-depth view of the MAML algorithm
 
-![maml](/assets/img/blog/maml.png)
+![maml](maml.png)
 The intuition behind the proposed approach, of learning the parameters of any standard model via meta-learning, is that some internal representations are more transferrable than others.
 
 The overall goal of the algorithm is to find model (optimizee) parameters that are *sensitive* to changes in the novel task loss (small changes induce large improvements), on any task drawn from $$p(\mathcal{T})$$. This should have the effect of **capturing internal features that are broadly applicable to all tasks in $$p(\mathcal{T})$$**.
 
-![maml_algo](/assets/img/blog/maml-algo.png)
+![maml_algo](maml-algo.png)
 As seen on Algorithm 1, the step size $$\alpha$$ may be fixed or meta-learned. The meta-objective is as follows:
 
 

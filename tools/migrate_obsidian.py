@@ -60,7 +60,9 @@ def slugify_asset(name):
 
 
 def find_note(title):
-    matches = [p for p in VAULT.rglob(title + ".md") if ".trash" not in p.parts]
+    matches = [p for p in VAULT.rglob(title + ".md")
+               if ".trash" not in p.parts
+               and not p.name.endswith(".excalidraw.md")]
     return matches[0] if matches else None
 
 
@@ -121,12 +123,16 @@ def build_assignment(notes):
     return assign
 
 
-def note_url(note, assign):
+def note_url(note, assign, current_post=None):
     a = assign[note]
-    url = f"/posts/{a['post_slug']}/"
     # anchor for grouped notes that are not the spine (spine decided in pass 2)
     if a["grouped"] and not a.get("is_spine"):
         a["anchor"] = slugify(note.stem)
+    if a["post_slug"] == current_post:
+        # same post: bare anchor (or nothing)
+        return f"#{a['anchor']}" if a.get("anchor") else ""
+    # relative link between posts: robust under any baseurl
+    url = f"../{a['post_slug']}/"
     if a.get("anchor"):
         url += f"#{a['anchor']}"
     return url
@@ -146,7 +152,7 @@ def copy_asset(path):
     return dest
 
 
-def convert_note(path, visited, assign, is_root=False):
+def convert_note(path, visited, assign, current_post=None, is_root=False):
     if path in visited and not is_root:
         return f"*[{path.stem} — included above]*"
     visited.add(path)
@@ -158,14 +164,13 @@ def convert_note(path, visited, assign, is_root=False):
         target = m.group(1).split("|")[0].split("#")[0].strip()
         note = find_note(target)
         if note:
-            body = convert_note(note, visited, assign)
+            body = convert_note(note, visited, assign, current_post)
             embeds.append(f"## {target}\n\n{body}")
             return f"\n\x00EMBED{len(embeds) - 1}\x00\n"
         asset = find_asset(target)
         if asset:
             copy_asset(asset)
-            return "![{}](/assets/img/blog/{})".format(
-                Path(target).stem, slugify_asset(target))
+            return "![{}]({})".format(Path(target).stem, slugify_asset(target))
         print(f"  WARNING: missing embed '{target}' in {path.name}")
         return f"*missing embed: {target}*"
 
@@ -175,11 +180,14 @@ def convert_note(path, visited, assign, is_root=False):
         label = raw.split("|")[1].strip() if "|" in raw else target
         note = find_note(target)
         if note and note in assign:
-            return f"[{label}]({note_url(note, assign)})"
+            url = note_url(note, assign, current_post)
+            if not url:
+                return label  # self-reference: keep plain text
+            return f"[{label}]({url})"
         asset = find_asset(target)
         if asset:
             copy_asset(asset)
-            return "[{}](/assets/img/blog/{})".format(label, slugify_asset(target))
+            return "[{}]({})".format(label, slugify_asset(target))
         print(f"  WARNING: unresolved wikilink '{target}' in {path.name}")
         return label
 
@@ -230,7 +238,7 @@ def convert_note(path, visited, assign, is_root=False):
             cand = find_asset(Path(ref).name)
         if cand and cand.exists():
             copy_asset(cand)
-            return "![{}](/assets/img/blog/{})".format(alt, slugify_asset(ref))
+            return "![{}]({})".format(alt, slugify_asset(ref))
         print(f"  WARNING: missing image '{ref}' in {path.name}")
         return m.group(0)
 
@@ -240,6 +248,11 @@ def convert_note(path, visited, assign, is_root=False):
         return "\n\n$$\n" + display_blocks[int(m.group(1))] + "\n$$\n\n"
 
     body = re.sub(r"\x00MATHBLOCK(\d+)\x00", restore_block, body)
+    # drop broken editing artifacts like [[[]()]]() and empty links
+    body = body.replace("[[]()]()", "")
+    body = re.sub(r"\[([^\]]*)\]\(\)", r"\1", body)
+    # upgrade external links to https (htmlproofer enforces it; content-safe)
+    body = re.sub(r"\]\(http://(?!localhost|127\.0\.0\.1)", "](https://", body)
     return body
 
 
@@ -250,6 +263,7 @@ def write_post(slug, title, cats, date, body):
           f"date: {date} 12:00:00\n"
           f"categories: [{', '.join(cats)}]\n"
           "math: true\n"
+          "media_subpath: /assets/img/blog\n"
           "pin: false\n"
           "---\n\n")
     dest = POSTS_OUT / f"{date}-{slug}.md"
@@ -311,7 +325,7 @@ def main():
         if a["grouped"] or n in absorbed:
             continue
         visited = set()
-        body = convert_note(n, visited, assign)
+        body = convert_note(n, visited, assign, a["post_slug"])
         title = TITLE_OVERRIDES.get(n.stem, a["title"])
         if title != a["title"]:
             # drop the note's own leading heading when it duplicates the title
@@ -326,11 +340,11 @@ def main():
             continue
         spine = g["spine"]
         visited = {spine}
-        body = convert_note(spine, visited, assign, is_root=True)
+        body = convert_note(spine, visited, assign, slug, is_root=True)
         rest = [p for p in members if p not in visited]
         rest.sort(key=lambda p: p.stat().st_mtime, reverse=True)
         for note in rest:
-            section = convert_note(note, visited, assign)
+            section = convert_note(note, visited, assign, slug)
             body += f"\n\n## {note.stem}\n\n{section}"
         date = max(p.stat().st_mtime for p in members)
         date = datetime.fromtimestamp(date).strftime("%Y-%m-%d")

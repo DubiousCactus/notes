@@ -4,12 +4,13 @@ description: "The Jacobian matrix — notes by Théo Morales"
 date: 2022-11-13 12:00:00
 categories: [mathematical-foundations, linear-algebra]
 math: true
+media_subpath: /assets/img/blog
 pin: false
 ---
 
 {% raw %}
 The Jacobian essentially represents what a multivariable function looks like locally (when zooming in on a specific point), as a linear transformation. 
-![locally_linear](/assets/img/blog/locally-linear.png)
+![locally_linear](locally-linear.png)
 
 When taking a point $$\mathbf{v}$$ to be transformed by the (non-)linear transformation $$F$$  as $$\mathbf{u} = F \mathbf{v}$$ where 
 
