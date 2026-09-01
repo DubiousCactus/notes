@@ -13,15 +13,13 @@ published: true
 {% raw %}
 ## What makes deep neural networks training slow?
 
-~~Dot products is the base mechanism of neural networks, and if the input vectors have a large norm, then the resulting dot product between the weights will be large.~~
-
 [why does batch norm work?](https://www.youtube.com/watch?v=nUUqwaxLnWs)
 
 ![Deep Neural Network.](https://i.stack.imgur.com/epElm.png)
 
 **Let's have a look at the hidden layer 4:** its activations depend on earlier layers' activations, which are parameterised by their weights and biases. As the earlier weights are changing during training, the distribution of inputs at layer 4 is shifting: this phenomenon is referred to as *covariate shift*.
 
-> What the fuck is covariate shift? It is the change in the distribution of the inputs. If the objective function changes, the covariate shift is even more acute.
+> What is covariate shift? It is the change in the distribution of the inputs. If the objective function changes, the covariate shift is even more acute.
 
 
 ## Exploding gradients
