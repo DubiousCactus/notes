@@ -182,18 +182,82 @@ main article header h1 {
   }
 }
 
+#post-graph-wrap {
+  position: relative;
+  margin-bottom: 2.5rem;
+
+  &.is-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    margin: 0;
+    border-radius: 0;
+    background: var(--main-bg, #000);
+
+    #post-graph {
+      height: 100vh;
+      border-radius: 0;
+      border: none;
+    }
+  }
+}
+
 #post-graph {
   width: 100%;
   height: 480px;
   border: 1px solid var(--main-border-color);
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--card-bg);
-  margin-bottom: 2.5rem;
   overflow: hidden;
+  position: relative;
+  user-select: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+  svg {
+    display: block;
+  }
 
   .graph-edge {
     stroke: var(--text-muted-color);
-    stroke-opacity: 0.35;
+    stroke-opacity: 0.3;
+    transition: stroke-opacity 0.2s ease, stroke 0.2s ease, stroke-width 0.2s ease;
+
+    &.is-highlighted {
+      stroke: var(--link-color, #4065dc);
+      stroke-opacity: 0.85;
+      stroke-width: 2px;
+    }
+
+    &.is-dimmed {
+      stroke-opacity: 0.05;
+    }
+  }
+
+  .graph-edge-cat {
+    stroke-dasharray: 3 4;
+    stroke-opacity: 0.45;
+  }
+
+  .graph-node {
+    transition: opacity 0.2s ease;
+
+    circle {
+      transition: r 0.2s ease, stroke 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+    }
+
+    &:hover circle,
+    &.is-highlighted circle {
+      stroke: var(--heading-color, #fff);
+      stroke-width: 2.5px;
+      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+    }
+
+    &.is-dimmed {
+      opacity: 0.15;
+    }
   }
 
   .graph-label {
@@ -205,25 +269,109 @@ main article header h1 {
     stroke-width: 3px;
     stroke-linejoin: round;
     pointer-events: none;
+    transition: opacity 0.2s ease;
+
+    &.is-dimmed {
+      opacity: 0.15;
+    }
   }
 
-  .graph-node:hover circle {
-    stroke: var(--link-color);
-    stroke-width: 2px;
+  .graph-label-cat {
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: capitalize;
+  }
+
+  .graph-node-category circle {
+    fill-opacity: 0.95;
   }
 }
 
-.graph-edge-cat {
-  stroke-dasharray: 2 3;
-  stroke-opacity: 0.5;
+/* Floating Controls Toolbar */
+.graph-controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  display: flex;
+  gap: 6px;
+
+  .graph-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 8px;
+    border: 1px solid var(--main-border-color);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+      background: var(--btn-hover-bg, rgba(128, 128, 128, 0.2));
+      color: var(--link-color);
+      transform: translateY(-1px);
+    }
+
+    &.active {
+      background: var(--link-color);
+      color: #fff;
+      border-color: var(--link-color);
+    }
+  }
 }
 
-.graph-label-cat {
-  font-weight: 600;
-  font-size: 0.8rem;
-  text-transform: capitalize;
-}
+/* Floating Obsidian Tooltip */
+.graph-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 20;
+  transition: opacity 0.15s ease;
+  background: var(--card-bg);
+  border: 1px solid var(--main-border-color);
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  max-width: 260px;
 
-.graph-node-category circle {
-  fill-opacity: 0.9;
+  &.is-visible {
+    opacity: 1;
+  }
+
+  .tooltip-title {
+    font-family: 'Amiri', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--heading-color);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .tooltip-meta {
+    font-size: 0.72rem;
+    color: var(--text-muted-color);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    .tooltip-cat {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+  }
 }
