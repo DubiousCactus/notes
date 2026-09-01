@@ -141,6 +141,7 @@ def note_url(note, assign, current_post=None):
 # ---------------- pass 2: conversion ----------------
 
 _copied = set()
+_link_edges = set()  # (source_post_slug, target_post_slug)
 
 
 def copy_asset(path):
@@ -183,6 +184,8 @@ def convert_note(path, visited, assign, current_post=None, is_root=False):
             url = note_url(note, assign, current_post)
             if not url:
                 return label  # self-reference: keep plain text
+            if current_post:
+                _link_edges.add((current_post, assign[note]["post_slug"]))
             return f"[{label}]({url})"
         asset = find_asset(target)
         if asset:

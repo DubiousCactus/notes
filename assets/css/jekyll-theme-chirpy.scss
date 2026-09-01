@@ -155,3 +155,75 @@ main article header h1 {
 .content img {
   border-radius: 8px;
 }
+
+/* ---- Home page: intro + note graph ---- */
+.home-intro {
+  text-align: center;
+  margin: 1.5rem 0 2rem;
+
+  .home-title {
+    font-family: 'Amiri', serif;
+    font-weight: 700;
+    font-size: clamp(2.027em, calc(0.4rem + 5.1vw), 2.986em);
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .home-tagline {
+    font-size: 1.05rem;
+    color: var(--text-color);
+    max-width: 42em;
+    margin: 0 auto 0.5rem;
+  }
+
+  .home-hint {
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+  }
+}
+
+#post-graph {
+  width: 100%;
+  height: 480px;
+  border: 1px solid var(--main-border-color);
+  border-radius: 10px;
+  background: var(--card-bg);
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+
+  .graph-edge {
+    stroke: var(--text-muted-color);
+    stroke-opacity: 0.35;
+  }
+
+  .graph-label {
+    font-family: 'Spectral', serif;
+    font-size: 0.72rem;
+    fill: var(--text-color);
+    paint-order: stroke;
+    stroke: var(--card-bg);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+    pointer-events: none;
+  }
+
+  .graph-node:hover circle {
+    stroke: var(--link-color);
+    stroke-width: 2px;
+  }
+}
+
+.graph-edge-cat {
+  stroke-dasharray: 2 3;
+  stroke-opacity: 0.5;
+}
+
+.graph-label-cat {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+.graph-node-category circle {
+  fill-opacity: 0.9;
+}
