@@ -710,3 +710,50 @@ main article header h1 {
     }
   }
 }
+
+/* GLightbox Image Preview & Color Scheme Fixes */
+.glightbox-container {
+  .gslide-media {
+    background: var(--card-bg, #fff) !important;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+
+    img {
+      max-height: 82vh !important;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+  }
+
+  .goverlay {
+    background: rgba(0, 0, 0, 0.88) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .gclose {
+    background: rgba(255, 255, 255, 0.25) !important;
+    border-radius: 50% !important;
+    width: 44px !important;
+    height: 44px !important;
+    top: 24px !important;
+    right: 24px !important;
+    opacity: 0.9 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.45) !important;
+      transform: scale(1.1);
+    }
+  }
+
+  .gslide-description {
+    background: rgba(0, 0, 0, 0.75) !important;
+    color: #fff !important;
+    border-radius: 0 0 12px 12px;
+  }
+}
