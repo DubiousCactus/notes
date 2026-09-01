@@ -213,6 +213,45 @@ document.addEventListener('DOMContentLoaded', function () {
       // Initial fit cleanly centers and zooms the graph
       fit(false);
 
+      // --- Persistent Filter State Management ---
+      let activeCategoryFilter = 'all';
+      const postCards = document.querySelectorAll('#post-list .card-wrapper');
+
+      function applyFilterState() {
+        if (activeCategoryFilter === 'all') {
+          node.classed('is-highlighted', false);
+          node.classed('is-dimmed', false);
+          link.classed('is-highlighted', false);
+          link.classed('is-dimmed', false);
+        } else {
+          const matchingNodes = nodes.filter((n) => n.cat === activeCategoryFilter);
+          const matchingIds = new Set(matchingNodes.map((n) => n.id));
+
+          node.classed('is-highlighted', (n) => matchingIds.has(n.id));
+          node.classed('is-dimmed', (n) => !matchingIds.has(n.id));
+
+          link.classed('is-highlighted', (l) => {
+            const sId = l.source.id || l.source;
+            const tId = l.target.id || l.target;
+            return matchingIds.has(sId) || matchingIds.has(tId);
+          });
+          link.classed('is-dimmed', (l) => {
+            const sId = l.source.id || l.source;
+            const tId = l.target.id || l.target;
+            return !matchingIds.has(sId) && !matchingIds.has(tId);
+          });
+        }
+
+        postCards.forEach((card) => {
+          const cardCat = card.dataset.cat;
+          if (activeCategoryFilter === 'all' || cardCat === activeCategoryFilter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
       // --- Hover Effects (Obsidian Style) ---
       function highlightNode(d) {
         const neighbors = neighborMap[d.id] || new Set([d.id]);
@@ -247,17 +286,15 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       function unhighlightNode() {
-        node.classed('is-highlighted', false);
-        node.classed('is-dimmed', false);
-        link.classed('is-highlighted', false);
-        link.classed('is-dimmed', false);
         tooltip.classList.remove('is-visible');
+        document.querySelectorAll('#post-list .card-wrapper').forEach((c) => c.classList.remove('is-graph-hovered'));
+        // Restore active category filter state when hover ends!
+        applyFilterState();
       }
 
       node
         .on('mouseenter', (event, d) => {
           highlightNode(d);
-          // Highlight post card in list below if matching
           const card = document.querySelector(`#post-list .card-wrapper[data-url="${d.url}"]`);
           if (card) card.classList.add('is-graph-hovered');
         })
@@ -269,7 +306,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .on('mouseleave', () => {
           unhighlightNode();
-          document.querySelectorAll('#post-list .card-wrapper').forEach((c) => c.classList.remove('is-graph-hovered'));
         })
         .on('click', (event, d) => {
           window.location.href = baseurl + d.url;
@@ -293,7 +329,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       // --- Bi-directional Post Card Hover Sync ---
-      const postCards = document.querySelectorAll('#post-list .card-wrapper');
       postCards.forEach((card) => {
         const cardUrl = card.dataset.url;
         if (!cardUrl) return;
@@ -365,42 +400,10 @@ document.addEventListener('DOMContentLoaded', function () {
               .forEach((b) => b.classList.remove('active'));
             btn.classList.add('active');
 
-            const selectedCat = btn.dataset.cat;
-            filterGraphAndCards(selectedCat);
+            activeCategoryFilter = btn.dataset.cat;
+            applyFilterState();
           };
         });
-      }
-
-      function filterGraphAndCards(category) {
-        postCards.forEach((card) => {
-          const cardCat = card.dataset.cat;
-          if (category === 'all' || cardCat === category) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-
-        if (category === 'all') {
-          unhighlightNode();
-        } else {
-          const matchingNodes = nodes.filter((n) => n.cat === category);
-          const matchingIds = new Set(matchingNodes.map((n) => n.id));
-
-          node.classed('is-highlighted', (n) => matchingIds.has(n.id));
-          node.classed('is-dimmed', (n) => !matchingIds.has(n.id));
-
-          link.classed('is-highlighted', (l) => {
-            const sId = l.source.id || l.source;
-            const tId = l.target.id || l.target;
-            return matchingIds.has(sId) || matchingIds.has(tId);
-          });
-          link.classed('is-dimmed', (l) => {
-            const sId = l.source.id || l.source;
-            const tId = l.target.id || l.target;
-            return !matchingIds.has(sId) && !matchingIds.has(tId);
-          });
-        }
       }
 
       // --- Controls Toolbar ---
