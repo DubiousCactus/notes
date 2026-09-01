@@ -530,17 +530,50 @@ main article header h1 {
   .backlink-card {
     background: var(--card-bg);
     border: 1px solid var(--main-border-color) !important;
+    border-radius: 10px;
+    padding: 1rem;
     transition: transform 0.15s ease, border-color 0.15s ease;
 
-    &:hover {
-      border-color: var(--link-color) !important;
-      transform: translateY(-1px);
-    }
-
     .backlink-subhead {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 600;
       letter-spacing: 0.02em;
+      margin-bottom: 0.75rem !important;
+    }
+
+    .backlink-item-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      color: var(--text-color);
+      text-decoration: none !important;
+      font-weight: 500;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+
+      .backlink-item-title {
+        flex: 1;
+        line-height: 1.35;
+      }
+
+      .backlink-item-cat {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #fff;
+        padding: 2px 7px;
+        border-radius: 4px;
+        white-space: nowrap;
+        text-transform: capitalize;
+      }
+
+      &:hover {
+        background: var(--btn-hover-bg, rgba(128, 128, 128, 0.15));
+        color: var(--link-color);
+        transform: translateX(3px);
+      }
     }
   }
 }

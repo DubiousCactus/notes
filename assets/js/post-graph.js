@@ -100,8 +100,10 @@ document.addEventListener('DOMContentLoaded', function () {
                   .map(
                     (n) => `
                   <li class="mb-1">
-                    <a href="${baseurl}${n.url}" class="fw-semibold text-decoration-none">${n.title}</a>
-                    <span class="badge ms-1" style="background: ${CAT_COLORS[n.cat] || '#8a8a8a'}">${(n.cat || '').replace(/-/g, ' ')}</span>
+                    <a href="${baseurl}${n.url}" class="backlink-item-link">
+                      <span class="backlink-item-title">${n.title}</span>
+                      <span class="backlink-item-cat" style="background: ${CAT_COLORS[n.cat] || '#8a8a8a'}">${(n.cat || '').replace(/-/g, ' ')}</span>
+                    </a>
                   </li>
                 `
                   )
@@ -123,8 +125,10 @@ document.addEventListener('DOMContentLoaded', function () {
                   .map(
                     (n) => `
                   <li class="mb-1">
-                    <a href="${baseurl}${n.url}" class="fw-semibold text-decoration-none">${n.title}</a>
-                    <span class="badge ms-1" style="background: ${CAT_COLORS[n.cat] || '#8a8a8a'}">${(n.cat || '').replace(/-/g, ' ')}</span>
+                    <a href="${baseurl}${n.url}" class="backlink-item-link">
+                      <span class="backlink-item-title">${n.title}</span>
+                      <span class="backlink-item-cat" style="background: ${CAT_COLORS[n.cat] || '#8a8a8a'}">${(n.cat || '').replace(/-/g, ' ')}</span>
+                    </a>
                   </li>
                 `
                   )
