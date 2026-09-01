@@ -50,7 +50,8 @@ layout: default
 
 <div id="post-list" class="flex-grow-1 px-xl-1">
   {% for post in posts %}
-    <article class="card-wrapper card" data-url="{{ post.url | relative_url }}" data-cat="{{ post.categories.first | slugify }}">
+    {% capture _cats %}{% for c in post.categories %}{{ c | slugify }} {% endfor %}{% endcapture %}
+    <article class="card-wrapper card" data-url="{{ post.url | relative_url }}" data-cats="{{ _cats | strip }}">
       <a href="{{ post.url | relative_url }}" class="post-preview row g-0 flex-md-row-reverse">
         {% assign card_body_col = '12' %}
 

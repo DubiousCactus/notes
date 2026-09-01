@@ -218,13 +218,28 @@ document.addEventListener('DOMContentLoaded', function () {
       const postCards = document.querySelectorAll('#post-list .card-wrapper');
 
       function applyFilterState() {
+        postCards.forEach((card) => {
+          if (activeCategoryFilter === 'all') {
+            card.style.display = '';
+          } else {
+            const cardCats = (card.dataset.cats || card.dataset.cat || '').trim().split(/\s+/);
+            if (cardCats.includes(activeCategoryFilter)) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          }
+        });
+
         if (activeCategoryFilter === 'all') {
           node.classed('is-highlighted', false);
           node.classed('is-dimmed', false);
           link.classed('is-highlighted', false);
           link.classed('is-dimmed', false);
         } else {
-          const matchingNodes = nodes.filter((n) => n.cat === activeCategoryFilter);
+          const matchingNodes = nodes.filter(
+            (n) => n.cat === activeCategoryFilter || n.id === activeCategoryFilter || n.id.includes(activeCategoryFilter)
+          );
           const matchingIds = new Set(matchingNodes.map((n) => n.id));
 
           node.classed('is-highlighted', (n) => matchingIds.has(n.id));
@@ -241,15 +256,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return !matchingIds.has(sId) && !matchingIds.has(tId);
           });
         }
-
-        postCards.forEach((card) => {
-          const cardCat = card.dataset.cat;
-          if (activeCategoryFilter === 'all' || cardCat === activeCategoryFilter) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
-        });
       }
 
       // --- Hover Effects (Obsidian Style) ---
