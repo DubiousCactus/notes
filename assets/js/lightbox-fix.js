@@ -1,28 +1,31 @@
-document.addEventListener('DOMContentLoaded', function () {
-  // Listen for Escape key globally to close GLightbox preview
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      const gContainer = document.querySelector('.glightbox-container');
-      if (gContainer && !gContainer.classList.contains('gclean')) {
-        const closeBtn = gContainer.querySelector('.gclose, .glightbox-close');
-        if (closeBtn) {
-          closeBtn.click();
-        }
-      }
+(function () {
+  function closeGLightbox() {
+    const gContainer = document.querySelector('.glightbox-container');
+    if (!gContainer) return;
+
+    // Trigger close via close button mouse event
+    const closeBtn = gContainer.querySelector('.gclose, .glightbox-close, [aria-label="Close"]');
+    if (closeBtn) {
+      const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
+      closeBtn.dispatchEvent(clickEvent);
+      if (typeof closeBtn.click === 'function') closeBtn.click();
     }
-  });
 
-  // Observe DOM for GLightbox container creation to enforce accessibility and ESC listener
-  const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      mutation.addedNodes.forEach(function (node) {
-        if (node.nodeType === 1 && node.classList && node.classList.contains('glightbox-container')) {
-          node.setAttribute('tabindex', '-1');
-          node.focus();
-        }
-      });
-    });
-  });
+    // Trigger close via overlay click if close button wasn't found
+    const overlay = gContainer.querySelector('.goverlay');
+    if (overlay) {
+      const overlayEvent = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
+      overlay.dispatchEvent(overlayEvent);
+    }
+  }
 
-  observer.observe(document.body, { childList: true });
-});
+  function handleEscape(e) {
+    if (e.key === 'Escape' || e.keyCode === 27) {
+      closeGLightbox();
+    }
+  }
+
+  // Intercept Escape key during CAPTURE phase so no other listener blocks it
+  window.addEventListener('keydown', handleEscape, true);
+  window.addEventListener('keyup', handleEscape, true);
+})();
