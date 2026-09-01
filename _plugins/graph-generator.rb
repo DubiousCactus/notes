@@ -37,6 +37,7 @@ module GraphGenerator
     ].freeze
 
     def generate(site)
+      posts = site.posts.docs
       nodes = []
       links = []
       cat_nodes = {}
@@ -45,6 +46,18 @@ module GraphGenerator
       site.posts.docs.each do |post|
         slug = File.basename(post.path, '.md').sub(/\A\d{4}-\d{2}-\d{2}-/, '')
         post_slugs[slug] = true
+      end
+
+      # self-heal: links pointing to unpublished posts degrade to plain text,
+      # so disabling a post never breaks the ones that reference it
+      posts.each do |post|
+        healed = post.content.gsub(
+          %r{\[([^\]]*)\]\((?:\.\.|/posts)/([a-z0-9\-]+)/(?:#[^)]*)?\)}
+        ) do
+          m = Regexp.last_match
+          post_slugs.include?(m[2]) ? m[0] : m[1]
+        end
+        post.content = healed if healed != post.content
       end
 
       site.posts.docs.each do |post|
