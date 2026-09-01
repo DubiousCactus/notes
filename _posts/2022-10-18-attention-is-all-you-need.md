@@ -3,6 +3,7 @@ title: "Attention is all you need"
 description: "Attention is all you need — notes by Théo Morales"
 date: 2022-10-18 12:00:00
 categories: [attention-is-all-you-need]
+tags: [attention-is-all-you-need]
 math: true
 media_subpath: /assets/img/blog
 pin: false

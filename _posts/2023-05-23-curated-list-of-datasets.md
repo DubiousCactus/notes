@@ -3,6 +3,7 @@ title: "Curated list of datasets"
 description: "Curated list of datasets — notes by Théo Morales"
 date: 2023-05-23 12:00:00
 categories: [hand-object-interaction]
+tags: [hand-object-interaction]
 math: true
 media_subpath: /assets/img/blog
 pin: false

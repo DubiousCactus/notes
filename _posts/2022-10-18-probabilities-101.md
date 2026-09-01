@@ -3,6 +3,7 @@ title: "Probabilities 101"
 description: "Probabilities 101 — notes by Théo Morales"
 date: 2022-10-18 12:00:00
 categories: [mathematical-foundations, probabilities-statistics]
+tags: [mathematical-foundations, probabilities-statistics]
 math: true
 media_subpath: /assets/img/blog
 pin: false

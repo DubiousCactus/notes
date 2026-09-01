@@ -3,6 +3,7 @@ title: "Proof of matrix-vector multiplication commutativeness for a symmetric ma
 description: "Proof of matrix-vector multiplication commutativeness for a symmetric matrix — notes by Théo Morales"
 date: 2022-10-18 12:00:00
 categories: [mathematical-foundations, linear-algebra]
+tags: [mathematical-foundations, linear-algebra]
 math: true
 media_subpath: /assets/img/blog
 pin: false

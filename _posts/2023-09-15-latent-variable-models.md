@@ -3,6 +3,7 @@ title: "Latent Variable Models"
 description: "Latent Variable Models — notes by Théo Morales"
 date: 2023-09-15 12:00:00
 categories: [deep-learning, variational-inference]
+tags: [deep-learning, variational-inference]
 math: true
 media_subpath: /assets/img/blog
 pin: false

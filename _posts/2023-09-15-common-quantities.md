@@ -3,6 +3,7 @@ title: "Common quantities"
 description: "Common quantities — notes by Théo Morales"
 date: 2023-09-15 12:00:00
 categories: [mathematical-foundations, information-theory]
+tags: [mathematical-foundations, information-theory]
 math: true
 media_subpath: /assets/img/blog
 pin: false

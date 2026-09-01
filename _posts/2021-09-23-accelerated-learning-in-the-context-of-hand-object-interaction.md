@@ -3,6 +3,7 @@ title: "Accelerated Learning in the Context of Hand-Object Interaction"
 description: "Accelerated Learning in the Context of Hand-Object Interaction — notes by Théo Morales"
 date: 2021-09-23 12:00:00
 categories: [hand-object-interaction]
+tags: [hand-object-interaction]
 math: true
 media_subpath: /assets/img/blog
 pin: false

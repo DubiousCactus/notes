@@ -3,6 +3,7 @@ title: "Entangled poses, Manifolds, and Neural Networks"
 description: "Entangled poses, Manifolds, and Neural Networks — notes by Théo Morales"
 date: 2022-09-15 12:00:00
 categories: [deep-learning, manifolds-neural-networks]
+tags: [deep-learning, manifolds-neural-networks]
 math: true
 media_subpath: /assets/img/blog
 pin: false

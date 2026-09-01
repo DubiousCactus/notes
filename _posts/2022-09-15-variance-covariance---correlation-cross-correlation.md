@@ -3,6 +3,7 @@ title: "Variance, covariance - Correlation, cross-correlation"
 description: "Variance, covariance - Correlation, cross-correlation — notes by Théo Morales"
 date: 2022-09-15 12:00:00
 categories: [mathematical-foundations, probabilities-statistics]
+tags: [mathematical-foundations, probabilities-statistics]
 math: true
 media_subpath: /assets/img/blog
 pin: false

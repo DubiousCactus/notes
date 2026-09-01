@@ -3,6 +3,7 @@ title: "Gaussian Processes from A to Z"
 description: "Gaussian Processes from A to Z — notes by Théo Morales"
 date: 2022-10-24 12:00:00
 categories: [gaussian-neural-processes]
+tags: [gaussian-neural-processes]
 math: true
 media_subpath: /assets/img/blog
 pin: false

@@ -3,6 +3,7 @@ title: "A Gentle Introduction to Meta-Learning"
 description: "A Gentle Introduction to Meta-Learning — notes by Théo Morales"
 date: 2022-10-18 12:00:00
 categories: [meta-learning]
+tags: [meta-learning]
 math: true
 media_subpath: /assets/img/blog
 pin: false

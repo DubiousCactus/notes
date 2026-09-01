@@ -3,6 +3,7 @@ title: "Backpropagation basics"
 description: "Backpropagation basics — notes by Théo Morales"
 date: 2022-10-18 12:00:00
 categories: [deep-learning, automatic-differentiation]
+tags: [deep-learning, automatic-differentiation]
 math: true
 media_subpath: /assets/img/blog
 pin: false

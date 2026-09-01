@@ -3,6 +3,7 @@ title: "Sparse Distributed Memory"
 description: "Sparse Distributed Memory — notes by Théo Morales"
 date: 2022-05-07 12:00:00
 categories: [sparse-distributed-memory]
+tags: [sparse-distributed-memory]
 math: true
 media_subpath: /assets/img/blog
 pin: false

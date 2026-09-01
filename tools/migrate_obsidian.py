@@ -265,6 +265,7 @@ def write_post(slug, title, cats, date, body):
           f"description: \"{title} — notes by Théo Morales\"\n"
           f"date: {date} 12:00:00\n"
           f"categories: [{', '.join(cats)}]\n"
+          f"tags: [{', '.join(cats)}]\n"
           "math: true\n"
           "media_subpath: /assets/img/blog\n"
           "pin: false\n"

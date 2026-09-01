@@ -3,6 +3,7 @@ title: "Eigenanalysis"
 description: "Eigenanalysis — notes by Théo Morales"
 date: 2025-08-10 12:00:00
 categories: [mathematical-foundations, linear-algebra]
+tags: [mathematical-foundations, linear-algebra]
 math: true
 media_subpath: /assets/img/blog
 pin: false

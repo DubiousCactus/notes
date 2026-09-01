@@ -3,6 +3,7 @@ title: "Activation functions"
 description: "Activation functions — notes by Théo Morales"
 date: 2022-02-11 12:00:00
 categories: [deep-learning]
+tags: [deep-learning]
 math: true
 media_subpath: /assets/img/blog
 pin: false

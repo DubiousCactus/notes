@@ -3,6 +3,7 @@ title: "Kullback-Leibler Divergence"
 description: "Kullback-Leibler Divergence — notes by Théo Morales"
 date: 2025-08-10 12:00:00
 categories: [mathematical-foundations, information-theory]
+tags: [mathematical-foundations, information-theory]
 math: true
 media_subpath: /assets/img/blog
 pin: false

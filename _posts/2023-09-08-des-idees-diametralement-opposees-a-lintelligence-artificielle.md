@@ -3,6 +3,7 @@ title: "Des Idées Diamètralement Opposées à l'Intelligence Artificielle"
 description: "Des Idées Diamètralement Opposées à l'Intelligence Artificielle — notes by Théo Morales"
 date: 2023-09-08 12:00:00
 categories: [conversations]
+tags: [conversations]
 math: true
 media_subpath: /assets/img/blog
 pin: false

@@ -3,6 +3,7 @@ title: "Supervised Learning in a Bayesian Framework"
 description: "Supervised Learning in a Bayesian Framework — notes by Théo Morales"
 date: 2022-01-21 12:00:00
 categories: [deep-learning]
+tags: [deep-learning]
 math: true
 media_subpath: /assets/img/blog
 pin: false

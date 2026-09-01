@@ -3,6 +3,7 @@ title: "SOTA methods in hand pose regression for HOI"
 description: "SOTA methods in hand pose regression for HOI — notes by Théo Morales"
 date: 2023-05-31 12:00:00
 categories: [hand-object-interaction]
+tags: [hand-object-interaction]
 math: true
 media_subpath: /assets/img/blog
 pin: false
